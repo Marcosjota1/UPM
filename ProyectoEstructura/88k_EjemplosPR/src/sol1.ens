@@ -1,0 +1,50 @@
+;MACROS
+org 100
+LEA: MACRO (ra, ETIQ)     
+		 or ra, r0, low(ETIQ) 
+		 or.u ra, ra, high(ETIQ)
+		 ENDMACRO
+LOAD: MACRO (ra, ETIQ)  
+		LEA (ra, ETIQ)
+		ld ra, ra, r0
+		ENDMACRO  
+PUSH: MACRO (ra)
+		subu r30, r30, 4
+		st ra, r30, r0
+		ENDMACRO
+POP: MACRO(ra)
+		ld ra, r30, 0
+		addu r30, r30, 4
+		ENDMACRO		
+;DATOS
+org 400
+cadena1:  data "Prueba\0"
+cadena2:  data "123456789 123456789 12\0A"
+
+CASO1: ;RESULTADO = 6
+		LEA(r29,100)
+		LEA(r30,86012)
+		LEA(r20, cadena1)
+		PUSH(r20)
+		bsr LongCad
+		POP(r20)
+		stop
+CASO2:
+		LEA(r30,86012)
+		LEA(r20, cadena2)
+		PUSH(r20)
+		bsr LongCad
+		POP(r20)
+		stop
+;CODIGO
+org 1000
+;EN T6 HACE SALTO A LONGCAD
+LongCad: ld r20,r30,0   
+		and r29,r0,0  
+BUCLE:  ld.bu r2,r20,0 
+		cmp r3,r2,r0 
+		bb1 eq,r3,FINBUCLE
+		addu r29,r29,1  
+		addu r20,r20,1 
+		br BUCLE
+FINBUCLE: jmp(r1)

@@ -1,0 +1,42 @@
+; Titulación: Grado en Informática. Plan 2009.
+; Materia:    Estructura de Computadores.
+; Archivo:    88k_Ejemplos.zip
+; ----------------------------------------------------------------------
+;
+; Ejemplo6:   Suma de las columnas de una matriz 5x5
+;             Recorrido por columnas (obligatorio).
+;             La matriz se representa por una tira de palabras:
+;             NF, NC, A[0,0], A[0,1], ... A[0,NC-1], A[1,0], A[1,1], ...
+;             Se facilitan datos de partida.
+;             Se trata de desarrollar el código de modo que quede el
+;             resultado en las direcciones RESUL y siguientes.
+
+; Macros
+LEA:      MACRO  (reg, ETIQ)
+          or     reg, r0,  low(ETIQ)
+          or.u   reg, reg, high(ETIQ)
+          ENDMACRO
+
+DBNZ:     MACRO  (reg, ETIQ)
+          sub    reg, reg, 1
+          cmp    r2, reg, r0
+          bb1    ne, r2, ETIQ
+          ENDMACRO
+
+; Datos
+          org    1000
+DATOS:    data   5, 5
+          data   1, 2, 3, 4, 5
+          data   2, 3, 4, 5, 6
+          data   3, 4, 5, 6, 7
+          data   4, 5, 6, 7, 8
+          data   5, 6, 7, 8, 9
+
+RESUL:	  res	 20
+
+; Código
+          org    2000
+PPAL:	  
+
+
+		  stop

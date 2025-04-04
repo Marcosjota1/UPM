@@ -1,0 +1,318 @@
+#include <stdio.h>
+
+#include <stdlib.h>
+
+int main() {
+
+    int i = 0; int j=0; char pruebaCadena [] = "abc";
+
+    while (pruebaCadena[i] != '\0') { printf ("%c", pruebaCadena[i]); i=i+1; }
+
+    printf ("%cUsando \\0: ", '\n');
+
+    while (pruebaCadena[j] != '\0') { printf ("Iteracion %d - ", j+1); j=j+1; }
+
+    printf ("%cUsando sizeof: ", '\n');
+
+    j= 0; //Reinicializar j
+
+    while (j < sizeof(pruebaCadena)) { printf ("Iteracion %d - ", j+1); j=j+1; }
+
+    printf ("\nsizeof pruebaCadena es %d", sizeof(pruebaCadena));
+
+    return 0; // Ejemplo aprenderaprogramar.com
+
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int main() {
+    char cadena1 [] ="aprenderaprogramar.com"; char cadena2 [sizeof(cadena1)];
+    char cadena3[] = " ok!";    char cadena4[50];
+    int resComparacion;
+    printf ("Cadena1 vale %s y Cadena2 vale %s \n", cadena1, cadena2);
+    strcpy (cadena2, cadena1); //Copia cadena1 en cadena2
+    printf ("Cadena1 vale %s y Cadena2 vale %s \n", cadena1, cadena2);
+    printf ("Cadena1 tiene longitud %d (uno mas contando \\0) \n", strlen(cadena1));
+    strcpy (cadena4, cadena1) ;
+    printf ("Concatenacion %s \n", strcat(cadena4, cadena3));
+    resComparacion = strcmp (cadena4, cadena2);
+    printf ("Cadena1 vale %s y Cadena2 vale %s \n", cadena1, cadena2);
+    printf ("Cadena3 vale %s y Cadena4 vale %s \n", cadena3, cadena4);
+    if (resComparacion ==0) {
+        puts ("Las cadenas 1 y 2 son iguales");
+    }
+    resComparacion = strcmp (cadena1, cadena3);
+    if (resComparacion >0) {
+        puts ("La cadena 1 precede alfabeticamente a la cadena 3");
+    }
+    return 0; // Ejemplo aprenderaprogramar.com
+}
+ 
+
+ 
+
+Nota: las cadenas en C no se pueden copiar escribiendo cadena1 = cadena2. 
+        En su lugar, debe usarse la función strcpy.
+
+
+
+strcpy (arg1, arg2)
+Copia arg2 en arg1. Ejemplo: strcpy (cadena, “control”);
+
+strlen (arg1)
+Devuelve la longitud del texto representado por arg1. Ejemplo: strlen(cadena1)
+
+strcat (arg1, arg2)
+Concatena las cadenas representadas por arg1 y arg2. Ejemplo: strcat(cadena1, “ unidades”)
+
+strcmp (arg1, arg2)
+    Devuelve 0 si las cadenas representadas por arg1 y arg2 son iguales, o un valor menor que cero 
+    si arg1 precede alfabéticamente a arg2. Ejemplo: resComparacion = strcmp (cadena4, cadena2);
+
+
+
+
+/* FICHEROS */
+
+fopen --> Manipular datos --> fclose
+
+FILE* nombreInternoFichero;
+
+nombreInternofichero = fopen (“rutaNombreFichero.txt”, “modoDeAcceso”);
+
+operación 1; operación 2; … ; operación n;
+
+fclose (nombreInternofichero)
+r
+
+Abre un archivo existente para lectura.
+w
+
+Crea un nuevo archivo para escritura (si ya existe, se pierden los datos preexistentes).
+a
+
+        Abre el archivo para añadir datos al final (se conservan datos existentes), o crea el archivo si no existía.
+        t
+
+        Archivo de texto.
+        b
+
+        Archivo binario.
+
+fputc
+
+Escribe un carácter en el archivo
+
+Ejemplo: fputc (‘a’, nombreInternoFichero);
+
+putc
+
+Igual que fputc
+
+fputs
+
+Escibe una cadena de texto en el archivo
+
+Ejemplo: fputs (“cadena”, nombreInternoFichero);
+
+fprintf
+
+Escribe como texto a un archivo los datos transformando el formato especificado en texto
+
+Ejemplo: fprintf (fichero, "%s %d", cadena1, num);
+
+
+#include <stdio.h>
+#include <stdlib.h>
+// Ejemplo aprenderaprogramar.com
+int main() {
+    FILE* fichero;
+    fichero = fopen("cursoAF1.txt", "wt");
+    fputs("Aprender a programar (linea 1)\n", fichero);
+    fputs("requiere esfuerzo (linea 2)\n", fichero);
+    fputs("y dedicacion (linea 3)", fichero);
+    fclose(fichero);
+    printf("Proceso completado");
+    return 0;
+}
+
+
+
+fgetc
+
+Recupera un carácter del archivo
+
+fgetc (nombreInternoFichero);
+
+getc
+
+Igual que fgetc
+
+fgets (arg1, arg2, arg3)
+
+Recupera el contenido del archivo en la variable arg1 hasta que encuentra o bien un carácter de fin de línea (\n)
+ o bien hasta extraer arg2-1 caracteres siendo arg2 un valor especificado en la llamada de la función 
+ y arg3 el nombre interno del fichero.
+
+Ejemplo: fgets (cadena1, n, nombreInternoFichero);
+
+fscanf (arg1, “%format1 %format2 …”, &var1, &var2 …)
+
+Recupera el contenido del archivo con nombre interno arg1 (hasta el primer espacio en blanco) 
+en las variables var1, var2 … con los formatos %format1, %format2…
+
+Ejemplo: fscanf (fichero, "%c", &cadena1[i]);
+
+Ejemplo: fscanf (fichero, "%d %d", &numero1, &numero2);
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define LIMITE 50
+// Ejemplo curso C aprenderaprogramar.com
+int main() {
+    char cadena1 [LIMITE];    
+    char cadena2 [LIMITE];
+    char cadena3 [LIMITE];
+    FILE* fichero;
+    fichero = fopen("cursoAF1.txt", "rt");
+    fgets (cadena1, LIMITE, fichero); /*Coge LIMITE caracteres de fichero y almacena en cadena1*/
+    fgets (cadena2, LIMITE, fichero);
+    fgets (cadena3, LIMITE, fichero);
+    fclose(fichero);
+    puts ("Extraido de fichero lo siguiente: \n");
+    puts (cadena1); puts (cadena2); puts (cadena3);
+    puts("Proceso completado");
+    return 0;
+}
+
+
+#include <stdio.h>
+#include <stdlib.h>
+int main() {
+    int dato[3]; dato[0] = 322; dato[1]= 112; dato[2]=567;    // 3 datos numerados del 0 al 2
+    int datoExtraido[3]; char textoExtraido [50];
+    FILE* fichero;
+    //ESCRITURA
+    fichero = fopen("misdatos.txt", "wt");
+    fprintf (fichero, "%s", "Datos de pesos en kgs");  fprintf (fichero, "%c", '\n');
+    fprintf (fichero, "%d %c", dato[0], '\n');
+    fprintf (fichero, "%d %c", dato[1], '\n');
+    fprintf (fichero, "%d %c", dato[2], '\n');
+    fclose(fichero);
+    printf("Proceso de escritura completado \n");
+
+    //LECTURA
+    fichero = fopen("misdatos.txt", "rt");
+    fgets (textoExtraido, 50, fichero);
+    fscanf (fichero, "%d", &datoExtraido[0] );
+    fscanf (fichero, "%d", &datoExtraido[1] );
+    fscanf (fichero, "%d", &datoExtraido[2] );
+    printf ("Texto extraido es: %s", textoExtraido);
+    printf ("Dato extraido indice 0 vale %d \n", datoExtraido[0]);
+    printf ("Dato extraido indice 1 vale %d \n", datoExtraido[1]);
+    printf ("Dato extraido indice 2 vale %d \n", datoExtraido[2]);
+    fclose(fichero);
+    printf("Proceso de lectura completado");
+    return 0; // Ejemplo curso C aprenderaprogramar.com
+}
+
+
+include <stdio.h>
+#include <stdlib.h>
+#define NumeroAlumnos 35
+
+int main() {
+    double nota[NumeroAlumnos]; //35 elementos numerados de 0 a 34
+    double aprobados;
+    double suspensos;
+    int dieces = 0;
+    int ceros = 0;
+    int i=0;
+
+    puts ("Programa Notas de clase \n");
+    //Extracción de datos de archivo
+    FILE* fichero;
+    fichero = fopen("c:\\notas.dat", "rt");
+    for (i=0; i<=NumeroAlumnos-1; i++) {
+        fscanf (fichero, "%lf", &nota[i] );
+        if (nota[i] >= 5) { aprobados = aprobados + 1; }
+        else { suspensos = suspensos + 1; }
+        if (nota[i] == 10) { dieces = dieces + 1; }
+        if (nota[i] == 0) {  ceros = ceros + 1; }
+    }
+    fclose(fichero);
+
+    printf ("Porcentaje de aprobados es %lf %% \n", (aprobados/NumeroAlumnos)*100);
+    printf ("Porcentaje de suspensos es %lf %% \n", (suspensos/NumeroAlumnos)*100);
+    printf ("Obtienen un 10 un total de %d alumnos \n", dieces);
+    printf ("Obtienen un 0 un total de %d alumnos \n", ceros);
+
+    return 0; // Ejercicios resueltos programacion C aprenderaprogramar.com
+}
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#define NumeroAlumnos 35
+// Ejercicios resueltos programacion aprenderaprogramar.com
+
+int main() {
+    int falloLectura = 0; //0 no hay fallo lectura, 1 hay fallo lectura
+    double nota[NumeroAlumnos]; //35 elementos numerados de 0 a 34
+    double sumatorio = 0;
+    double media = 0;
+    int i=0;
+    puts ("Programa Calcular Notas Medias \n");
+    //Extracción de datos de archivo
+    FILE* fichero;     fichero = fopen("notas.dat", "rt");
+    for (i=0; i<=NumeroAlumnos-1; i++) {
+        fscanf (fichero, "%lf", &nota[i] );
+        if (nota[i] < 0 || nota[i] > 10) { //[Dato no válido]
+            printf("No se pudo completar la extraccion de datos. Motivo: \n");
+            printf("dato no valido. Revise archivo y vuelva a intentarlo \n\n");
+            falloLectura = 1;  //[Interruptor]
+            break; //Salida forzada del for;
+        }
+        sumatorio = sumatorio + nota[i];
+    }
+    fclose(fichero);
+    if (falloLectura ==0) {      media = sumatorio / NumeroAlumnos;
+                    printf ("La nota media de la clase es %lf \n", media);
+    } else { printf("Gracias por utilizar este programa \n");  }
+    return 0;
+}
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int sumaUno (int numero) { numero = numero +1; return numero; }
+
+int sumaUnoArray (int miArray[], int longitud) {
+    int i=0; for(i=0; i<longitud; i++) {miArray[i] = miArray[i]+1;}
+    return 1; //Ejemplos aprenderaprogramar.com
+}
+
+int main() {
+    int n = 0;
+    int i = 0;
+    int num = 4;
+    int unArray[3] = {2, 4, -3};
+    n = sizeof(unArray)/sizeof(unArray[0]); //Numero de elementos en el array
+    for(i=0; i<n; i++) {
+           printf("Elemento %d del array antes: %d\n", i, unArray[i]);
+    }
+    printf("\n\nPasamos la variable num a la funcion\n");
+    printf("La funcion devuelve: %d\n", sumaUno(num));
+    printf("num no ha sido manipulada y sigue valiendo: %d\n\n", num);
+    printf("\n\nPasamos el array unArray a la funcion\n");
+    sumaUnoArray(unArray, n);
+    for(i=0; i<n; i++) {
+          printf("Elemento %d del array despues: %d\n", i, unArray[i]);
+    }
+    printf("unArray ha sido manipulado por la funcion\n\n");
+    return 0;
+}

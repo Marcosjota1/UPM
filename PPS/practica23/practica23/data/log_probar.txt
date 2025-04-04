@@ -1,0 +1,38 @@
+DBG[cargar_diccionario]: INICIO
+DBG[cargar_diccionario]: La clave es 11
+DBG[cargar_diccionario]: Palabra 1-ésima: LXLRZ
+DBG[cargar_diccionario]: Palabra 2-ésima: NSTNZ
+DBG[cargar_diccionario]: Palabra 3-ésima: LXLWL
+DBG[cargar_diccionario]: Palabra 4-ésima: NLMCL
+DBG[cargar_diccionario]: Palabra 5-ésima: PMLYZ
+DBG[cargar_diccionario]: Palabra 6-ésima: LCCZK
+DBG[cargar_diccionario]: Palabra 7-ésima: LXMLC
+DBG[cargar_diccionario]: Palabra 8-ésima: PCCZC
+DBG[cargar_diccionario]: Palabra 9-ésima: LYLOP
+DBG[cargar_diccionario]: Palabra 10-ésima: OFPWZ
+DBG[cargar_diccionario]: Palabra 11-ésima: MFWEZ
+DBG[cargar_diccionario]: Palabra 12-ésima: LYRPW
+DBG[cargar_diccionario]: Palabra 13-ésima: LCCPL
+DBG[cargar_diccionario]: Palabra 14-ésima: LYTXZ
+DBG[cargar_diccionario]: Palabra 15-ésima: OPOLW
+DBG[cargar_diccionario]: Palabra 16-ésima: LYZOZ
+DBG[cargar_diccionario]: Palabra 17-ésima: LYDLC
+DBG[cargar_diccionario]: Palabra 18-ésima: LYFWL
+DBG[cargar_diccionario]: Palabra 19-ésima: OPDPZ
+DBG[cargar_diccionario]: Palabra 20-ésima: PIECL
+DBG[cargar_diccionario]: FIN
+DBG[elegir_palabra]: INICIO
+DBG[elegir_palabra]: FIN
+DBG[cifrado_cesar]: INICIO
+DBG[cifrado_cesar]: Se procede a la decodificación
+DBG[cifrado_cesar]: FIN
+DBG[en_diccionario]: INICIO
+DBG[cifrado_cesar]: INICIO
+DBG[cifrado_cesar]: Se procede a la codificación
+ERR[cifrado_cesar]: Opción incorrecta (0 para codificar y 1 para decodificar)
+DBG[cifrado_cesar]: FIN
+DBG[en_diccionario]: La palabra se encuentra en el diccionario
+DBG[en_diccionario]: FIN
+DBG[cifrado_cesar]: INICIO
+DBG[cifrado_cesar]: Se procede a la decodificación
+DBG[cifrado_cesar]: FIN

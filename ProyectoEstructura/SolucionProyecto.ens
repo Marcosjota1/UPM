@@ -1,0 +1,39 @@
+; Titulación: Grado en Informática. Plan 2009.
+; Materia:    Estructura de Computadores.
+;Autores: Marcos Jimenez Gonzalez, Marcos Rodriguez Olmo
+
+; Macros
+LEA:      MACRO  (reg, ETIQ)
+          or     reg, r0,  low(ETIQ)
+          or.u   reg, reg, high(ETIQ)
+          ENDMACRO
+
+DBNZ:     MACRO  (reg, ETIQ)
+          sub    reg, reg, 1
+          cmp    r2, reg, r0
+          bb1    eq, r2, ETIQ
+          ENDMACRO
+
+; Datos
+          org    1000
+DATOS:    data   
+
+RESULT:	  res	 20
+
+; Código
+          org    2000
+PPAL:	or
+		or
+		LOAD()
+		LEA()
+		PUSH()
+		
+LongCad: ld r20,r30,0   ;Mete la cadena que esta en  30 por las Macros
+		 or r29,r0,0   ; contador de caracteres para saber la longitud
+BUCLE:	ld.bu r2,r20,0 ; coge caracter
+		cmp r3,r2,0 ; Miras si r2 es 0, lo guardas en r3
+		bb1 eq,r3,FINBUCLE
+		addu r29,r29,1  ; si el bucle no ha terminado se hara contador++
+		addu r20,r20,1 ;siguiente caracter de la cadena 
+		br BUCLE
+FINBUCLE:	jmp(r1)

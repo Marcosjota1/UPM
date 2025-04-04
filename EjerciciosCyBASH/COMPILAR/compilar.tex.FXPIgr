@@ -1,0 +1,30 @@
+#Orden que en una única línea compila y monta
+gcc -Wall auxiliar.c ejBase.c -o ejBase
+
+
+#Órdenes de compilación por separado
+gcc -Wall -c -o bin/ejBase.o ejBase.c
+gcc -Wall -c -o bin/auxiliar.o auxiliar.c
+
+#Montar
+gcc -o bin/exeBase bin/ejBase.o bin/auxiliar.o
+
+
+
+#Practica PPS
+
+scp -r PracticaPPS marcos.jimenezg@triqui2.fi.upm.es:~/   #Fuera de triqui
+
+scp es_prog.s marcos.jimenezg@triqui2.fi.upm.es:~/
+
+rm -r PracticaPPS  #dentro de triqui, directorio con acceso a la carpeta(elimina archivos)
+
+entrega.pps practica     #Desde el directorio con los 3 ficheros a entregar
+
+#TRIQUI (CONECTAR A VPN)
+
+ssh marcos.jimenezg@triqui2.fi.upm.es 
+
+		ssh -Y triqui.fi.upm.es -l marcos.jimenezg(Escritorio Virtual)
+		
+   #pwd mostrar directorio en el que estas

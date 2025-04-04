@@ -1,0 +1,9 @@
+Compilar
+========
+gcc -Wall -Wextra -Werror -ansi -pedantic -c src/lector_base.c -o bin/lector_base.o
+gcc -Wall -Wextra -Werror -ansi -pedantic -c src/lector_plus.c -o bin/lector_plus.o
+gcc -Wall -Wextra -Werror -ansi -pedantic -c src/tester.c -o bin/tester.o
+Montar
+======
+gcc -o bin/lector bin/lector_base.o bin/lector_plus.o bin/tester.o
+

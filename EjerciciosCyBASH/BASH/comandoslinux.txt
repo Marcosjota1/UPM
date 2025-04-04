@@ -1,0 +1,16 @@
+
+#ls listado de elementos
+    -a incluye ocultos
+    -al ocultos en lista
+#mkdir carpetaejemplo  -> crea carpeta  
+#rm -r carpetaejemplo  -> elimina   // importante el -r (elimina carpeta)
+    rm -f (f=force) hace el rm forzandolo,sin permiso
+#sin -r eliminar archivos
+#touch fichero_prueba.txt  ->crea fichero
+#mv fichero_prueba.txt ..  -> elimina el txt de donde este y lo mueve, en este caso al padre (..)
+#mv fichero_prueba.txt fichero.txt -> cambia nombre a fichero.txt
+#cp fichero.txt ..  ->copia sin eliminar
+#cat fichero.txt -> mostrara lo que contiene el fichero
+#grep hola fichero.txt  _> mostrara las lineas que contienen hola en el fichero
+    grep hola fichero.txt | grep mundo  -> filtra y despues filtra sobre resultado (debido a | )
+    -v hace lo contrario, muestra la que no lo contenga

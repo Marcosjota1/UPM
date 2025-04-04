@@ -1,0 +1,48 @@
+; Titulación: Grado en Informática. Plan 2009.
+; Materia:    Estructura de Computadores.
+; Archivo:    88k_Ejemplos.zip
+; ----------------------------------------------------------------------
+;
+; Ejemplo4:   Se trata de determinar el valor máximo de los elementos
+;             del vector de Bytes definido por la variable VECTOR.
+;             Está formado por un entero que especifica el número de
+;             elementos del vector seguido de dichos elementos.
+;             El programa contiene error(es).
+;
+;             Resultado:
+;               r29 contendrá el máximo de los elementos del vector.
+;
+; Macros
+LEA:      MACRO  (reg, ETIQ)
+          or     reg, r0,  low(ETIQ)
+          or.u   reg, reg, high(ETIQ)
+          ENDMACRO
+
+DBNZ:     MACRO  (reg, ETIQ)
+          sub    reg, reg, 1
+          cmp    r2, reg, r0
+          bb0    eq, r2, ETIQ
+          ENDMACRO
+
+; Datos
+		 org 0x1000
+VECTOR:  data  8
+         data  0x04A0B007, 0x01C85F66
+; Elementos: 07 B0 A0 04 66 5F C8 01
+
+; Código // Determina que elemento es mas alto, y deja en r29 el más alto en este caso C8
+		org     2000
+PPAL:   LEA     (r20,VECTOR)    ;r20 es el puntero al vector
+		xor 	r10, r0, r0		;r10 es un índice para recorrer el vector
+		ld      r11,r20,r10     ;r11 es el contador con el número de elementos
+		addu    r10,r10,4		;r10 apunta al primer elemento / cambias bucle ya que sino no se decrementa
+        xor     r29,r29,r29     ;r29 almacenará el valor máximo
+  BUCLE :  		ld.bu	 	r12,r20,r10		;r12 tiene el siguiente elemento ld-->ld.bu para que lea a nivel byte(sin signo no a nivel palabra)
+        cmp     r2,r12,r29      ;Si el elemento no es mayor
+        bb1     ls,r2,SALTO     ;se deja r29 igual 
+        or      r29,r12,r0		;y en caso contrario se cambia
+SALTO:  addu    r10,r10,1       ;Se pasa al elemento siguiente
+        DBNZ    (r11,BUCLE)     ;y se decrementa el contador 
+        stop
+
+

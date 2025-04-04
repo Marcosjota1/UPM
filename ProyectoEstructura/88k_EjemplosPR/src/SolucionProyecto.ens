@@ -1,0 +1,89 @@
+; Titulación: Grado en Informática. Plan 2009.
+; Materia:    Estructura de Computadores.
+;Autores: Marcos Jimenez Gonzalez, Marcos Rodriguez Olmo
+
+; ;Macros
+	 LEA: MACRO (ra, ETIQ)      ;Permite cargar la direccion efectiva de la etiqueta, te mete en reg el valor de la direccion(sin signo)
+		 or ra, r0, low(ETIQ) 
+		 or.u ra, ra, high(ETIQ)
+		 ENDMACRO
+	 LOAD:MACRO (ra, ETIQ)   ;Haces lea, coges la direccion, por ejemplo la direccion 1000 que contiene una matriz, 
+								; posteriormente haces load para cargar en un registro no la direccion sino los datos en ella
+		LEA (ra, ETIQ)
+		ld ra, ra, r0
+		ENDMACRO  
+	; PUSH: MACRO (ra)
+		; subu r30, r30, 4
+		; st ra, r30, r0
+		; ENDMACRO
+	; POP: MACRO(ra)
+		; ld ra, r30, 0
+		; addu r30, r30, 4
+		; ENDMACRO
+	;DBNZ: Macro(ra,ETIQ)
+		;   sub ra,ra,1
+		;   cmp r2,ra,0
+		;	bb0 eq,r2,ETIQ
+		;   ENDMACRO
+		
+	; org 0x400 ;MARCA LA DIRECCION DE MEMORIA DONDE ESTA EL CÓDIGO, PARA QUE NO SE SOLAPE CODIGO CON DATOS
+	
+
+	 prueba1: data "PRUEBA1\0"
+
+
+
+
+
+
+
+
+
+
+ ; Código
+          org    0x500
+		  
+; PRUEBAS:
+		 ;LEA(r30,6500)
+		; LEA(r20, prueba1)
+		; PUSH(r20)
+		; bsr(LongCad)
+		; POP(r20)
+
+;Start: LOAD(r21,cadena1)
+LongCad: ld r21,r30,0   ;Mete la cadena que esta en  30 por las MACROS
+		 ;or r21,data"PRUEBA\0",0 ;Probando SIN MACROS
+		 ;LEA(r20,prueba1)
+		 ;ld r20,r20,0
+		 or r29,r0,0   ; contador de caracteres para saber la longitud, con el or pones en r29 el valor deseado
+					;RECORDATORIO, probar puntero con and r29,r29,0
+BUCLE:	ld.bu r2,r20,0 ; coge caracter, A lo mejor en vez de 0 puede ser 0x8/C ya que es lo que ocupa el load
+		cmp r3,r2,0 ; Miras si r2 es 0, lo guardas en r3 
+		bb1 eq,r3,FINBUCLE
+		addu r29,r29,1  ; si el bucle no ha terminado se hara contador++
+		addu r20,r20,1 ;siguiente caracter de la cadena 
+		br BUCLE
+FINBUCLE: jmp(r1)
+;cmp r4,r29,poner numero de carcteres prueba
+;bb1 eq,r4,exito
+;exito: or r26,0,0X777;
+;SI EL PROGRAMA = EXITO TE PONDRÁ EN R26 777
+
+
+
+
+
+
+
+
+
+
+
+
+BuscaCar: ;saltas si ya encontrado, si no seguir recorriendo palabra
+
+
+iguales:
+
+
+noIguales:

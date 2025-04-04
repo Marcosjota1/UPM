@@ -1,0 +1,26 @@
+
+Titulación: Grado en Informática. Plan 2009.
+Materia:    Estructura de Computadores.
+Archivo:    88k_Ejemplos.zip
+
+El presente archivo contiene una colección de ejemplos de programación
+en ensamblador que serán utilizados en la correspondiente práctica de
+la asignatura Estructura de Computadores.
+
+----------------------------------------------------------------------
+
+Ejemplo1:  Programa mínimo. Suma de dos registros.
+
+Ejemplo2:  Programa principal y subrutina de suma.
+           Paso de parámetros en registros.
+           Punto de entrada: LLAM.
+
+Ejemplo3:  Pseudo-instrucciones org, res, data.
+           Almacenamiento de datos numéricos.
+           Almacenamiento de caracteres alfanuméricos (ASCII).
+           Definición y uso de la macro LEA.
+
+Ejemplo4:  Programa (erróneo) para determinar el máximmo de los elementos
+           de un vector.
+
+Ejemplo5:  Construir programa de suma de elementos de una matriz.

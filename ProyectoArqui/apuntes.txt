@@ -1,0 +1,21 @@
+Cuando SRA esta a 1 se puede leer un dato (y no basura)
+DESPUES DE LA COMA NO PONER ESPACIOS
+
+SCAN:
+MOVE.L 4(A7),A0 ; coges el buffer(de A7+4) y dejas en A0
+MOVE.W 8(A7),D1
+EOR.L D0,D0 //Inicializar d0 a 0 que contendra los caracteres leidos
+CMP.W D1,D0
+BEQ FIN_SCAN
+
+ESP_SCAN: 
+MOVE.B SRA,D2 //SRA siempre con .b 8 bits//lo copias en D2
+BTST #0,D2  //BITTEST -> el bit de D2 se niega y se mete en el flag de 0 (compara con 0)
+BEQ ESP_SCAN (CUANDO EN LA FIFO HAYA UN 1 NO SALTARAS)
+MOVE.B RBA,(A0)+   //Guardas lo siguiente pasado en A0(la pila) pasado como parametro, 
+                   // e postincrementas A0 en el tamaño del objeto transferido
+ADD.L #1,D0
+SUB.W #1,D1  //CONTADORES
+BNE ESP_SCAN //Si no se ha decrementado vuelves a leer
+   *Scan no acaba si no se teclea nada en la terminal de entrada
+RTS

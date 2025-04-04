@@ -1,0 +1,38 @@
+DBG[cargar_diccionario]: INICIO
+DBG[cargar_diccionario]: La clave es 11
+DBG[cargar_diccionario]: Palabra 1: LXLRZ
+DBG[cargar_diccionario]: Palabra 2: NSTNZ
+DBG[cargar_diccionario]: Palabra 3: LXLWL
+DBG[cargar_diccionario]: Palabra 4: NLMCL
+DBG[cargar_diccionario]: Palabra 5: PMLYZ
+DBG[cargar_diccionario]: Palabra 6: LCCZK
+DBG[cargar_diccionario]: Palabra 7: LXMLC
+DBG[cargar_diccionario]: Palabra 8: PCCZC
+DBG[cargar_diccionario]: Palabra 9: LYLOP
+DBG[cargar_diccionario]: Palabra 10: OFPWZ
+DBG[cargar_diccionario]: Palabra 11: MFWEZ
+DBG[cargar_diccionario]: Palabra 12: LYRPW
+DBG[cargar_diccionario]: Palabra 13: LCCPL
+DBG[cargar_diccionario]: Palabra 14: LYTXZ
+DBG[cargar_diccionario]: Palabra 15: OPOLW
+DBG[cargar_diccionario]: Palabra 16: LYZOZ
+DBG[cargar_diccionario]: Palabra 17: LYDLC
+DBG[cargar_diccionario]: Palabra 18: LYFWL
+DBG[cargar_diccionario]: Palabra 19: OPDPZ
+DBG[cargar_diccionario]: Palabra 20: PIECL
+DBG[cargar_diccionario]: FIN
+DBG[elegir_palabra]: INICIO
+DBG[elegir_palabra]:Se ha elegido la palabra 
+DBG[elegir_palabra]: FIN
+DBG[cifrado_cesar]: INICIO
+DBG[cifrado_cesar]: Se procede a la decodificación
+DBG[cifrado_cesar]: FIN
+DBG[en_diccionario]: INICIO
+DBG[cifrado_cesar]: INICIO
+DBG[cifrado_cesar]: Se procede a la codificación
+DBG[cifrado_cesar]: FIN
+DBG[en_diccionario]: La palabra se encuentra en el diccionario
+DBG[en_diccionario]: FIN
+DBG[cifrado_cesar]: INICIO
+DBG[cifrado_cesar]: Se procede a la decodificación
+DBG[cifrado_cesar]: FIN

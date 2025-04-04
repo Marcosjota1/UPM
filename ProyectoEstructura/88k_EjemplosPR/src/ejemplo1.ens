@@ -1,0 +1,11 @@
+; Titulación: Grado en Informática. Plan 2009.
+; Materia:    Estructura de Computadores.
+; Archivo:    88k_Ejemplos.zip
+; ----------------------------------------------------------------------
+;
+; Ejemplo1:  Programa mínimo. Suma de dos registros.
+;
+
+      add      r2, r2, r3  ; r2 <-- r2 + r3
+      stop                 ; 'instrucción' del emulador
+

@@ -1,0 +1,573 @@
+;-------------------------------------------------------------------------------------------------
+; ------------------------------------- MACROS ----------------------------------------------------
+;-------------------------------------------------------------------------------------------------
+org 100
+
+LEA: MACRO (ra, ETIQ)
+    or ra, r0, low(ETIQ)
+    or.u ra, ra, high(ETIQ)
+    ENDMACRO
+
+LOAD: MACRO (ra, ETIQ)
+    LEA (ra, ETIQ)
+    ld ra, ra, r0
+    ENDMACRO
+
+PUSH: MACRO (ra)
+    subu r30, r30, 4
+    st ra, r30, r0
+    ENDMACRO
+
+POP: MACRO(ra)
+    ld ra, r30, 0
+    addu r30, r30, 4
+    ENDMACRO
+
+DBNZ: MACRO(rd,ETIQ)
+    subu rd, rd, 1
+    cmp r7, rd, r0
+    bb0 eq, r7, ETIQ
+    ENDMACRO
+
+CPILA: MACRO()
+    PUSH (r1)
+    PUSH (r31)
+    or r31, r30, 0
+    ENDMACRO
+
+DPILA: MACRO()
+    or r30, r31, 0
+    POP(r31)
+    POP(r1)
+    ENDMACRO
+
+;-------------------------------------------------------------------------------------------------
+; ------------------------------------- DATOS ----------------------------------------------------
+;-------------------------------------------------------------------------------------------------
+org 1000
+
+cadena1: data "Prueba\0"
+cadena2: data "123456789 123456789 12\0A"
+cadena21: data "\0"
+
+C: data 0xA0
+D: data "*"
+cadena3: data "*2345*78*0\0"
+cadena31: data 0x40302010, 0x80706050, 0xA090
+from: data 1
+from2: data 0
+to: data 10
+
+cadena4: data "1234567890\0"
+cadena5: data "0123456789\0"
+
+
+
+;-------------------------------------------------------------------------------------------------
+; ------------------------------------- PROGRAMAS LLAMANTES---------------------------------------
+;-------------------------------------------------------------------------------------------------
+LONGCAD1: ; R29 = 6
+    LEA(r29, 100)
+    LEA(r30, 86012)
+    LEA(r20, cadena1)
+    PUSH(r20)
+    bsr LongCad
+    POP(r20)
+    stop
+
+LONGCAD2: ; res = 22; r29=16
+    LEA(r30, 86012)
+    LEA(r20, cadena2)
+    PUSH(r20)
+    bsr LongCad
+    POP(r20)
+    stop
+
+LONGCAD3: ; res=0
+    LEA(r30, 86012)
+    LEA(r20, cadena21)
+    PUSH(r20)
+    bsr LongCad
+    POP(r20)
+    stop
+
+BUSCACAR:
+    LEA(r30, 86000) ; R29 = 5
+    LOAD(r2, D)
+    LEA(r21, cadena3)
+    LOAD(r3, from)
+    LOAD(r4, to)
+    PUSH(r4)
+    PUSH(r3)
+    PUSH(r21)
+    PUSH(r2)
+    bsr BuscaCar
+    POP(r2)
+    POP(r21)
+    POP(r3)
+    POP(r4)
+    stop
+
+BUSCACAR2:
+    LEA(r30, 86000) ; R29 = A
+    LOAD(r2, C)
+    LEA(r21, cadena3)
+    LOAD(r3, from2)
+    LOAD(r4, to)
+    PUSH(r4)
+    PUSH(r3)
+    PUSH(r21)
+    PUSH(r2)
+    bsr BuscaCar
+    POP(r2)
+    POP(r21)
+    POP(r3)
+    POP(r4)
+    stop
+
+BUSCACAR3:
+    LEA(r30, 86000) ; R29 = 9
+    LOAD(r2, C)
+    LEA(r21, cadena31)
+    LOAD(r3, from2)
+    LOAD(r4, to)
+    PUSH(r4)
+    PUSH(r3)
+    PUSH(r21)
+    PUSH(r2)
+    bsr BuscaCar
+    POP(r2)
+    POP(r21)
+    POP(r3)
+    POP(r4)
+    stop
+
+COINCIDENCAD1:
+    LEA(r30, 86008) ; r29=0
+    LEA(r20, cadena4)
+    LEA(r21, cadena5)
+    PUSH(r20)
+    PUSH(r21)
+    bsr CoincidenCad
+    POP(r21)
+    POP(r20)
+    stop
+COINCIDENCAD2:
+    LEA(r30, 86008) ; R29=10=A
+    LEA(r20, cadena4)
+    LEA(r21, cadena4)
+    PUSH(r20)
+    PUSH(r21)
+    bsr CoincidenCad
+    POP(r21)
+    POP(r20)
+    stop
+	
+; org 0x12000
+; CMPR: data 0x07010014, 0x30000000, 0x34333231, 0x38373635, 0x37383939, 0x33343536, 0x00303132
+; DESCOMPRIME1: ;r29 = 14
+    ; LEA(r30,86008)
+    ; LEA(r21,CMPR)
+    ; LEA(r22,0x12100)
+    ; PUSH(r22)
+    ; PUSH(r21)
+    ; bsr Descomprime
+    ; POP(r21)
+    ; POP(r22)
+    ; stop
+	
+org 0x12000
+CMPR2:  data 0x0b010044, 0x10102400, 0x74004000, 0x20736572
+		, 0x73697274, 0x04000274, 0x00016769, 0x6d6f6304
+		, 0x00046e65, 0x206f6704, 0x75206e65, 0x61060018
+		, 0x65202c6c, 0x7270206c, 0x72656d69, 0x2006000c
+		, 0x2e657571, 0x00002e2e
+DESCOMPRIME2: ;r29 = 68 = 0x44
+    LEA(r30,86008)
+    LEA(r21,CMPR2)
+    LEA(r22,0x12100)
+    PUSH(r22)
+    PUSH(r21)
+    bsr Descomprime
+    POP(r21)
+    POP(r22)
+    stop
+	
+; org 0x12000
+; cad1: data "tres tristes tigres comen trigo en un trigal, el primer tigre que...\0"
+; COMPRIME1:  ;r29 = 46
+	; LEA(r30,86008)
+    ; LEA(r21,cad1)
+    ; LEA(r22,0x12100)
+    ; PUSH(r22)
+    ; PUSH(r21)
+    ; bsr Comprime
+    ; POP(r21)
+    ; POP(r22)
+    ; stop
+	
+
+
+;-------------------------------------------------------------------------------------------------
+; -------------------------------------CODIGO-----------------------------------------------------
+;-------------------------------------------------------------------------------------------------
+org 2000
+
+Verifica:
+    jmp(r1)
+; -------------------------------------LONGCAD-----------------------------------------------------
+
+LongCad:
+    ld r20, r30, 0
+    and r29, r0, 0
+BUCLELONG:
+    ld.bu r2, r20, r29
+    cmp r3, r2, r0
+    bb1 eq, r3, FINBUCLE
+    addu r29, r29, 1
+    br BUCLELONG
+FINBUCLE:
+    jmp(r1)
+
+
+; -------------------------------------BUSCACAR-----------------------------------------------------
+
+BuscaCar:
+    ld r2, r30, 0
+    ld r20, r30, 4
+    ld r3, r30, 8
+    ld r4, r30, 12
+BUCLECAR:
+    ld.bu r5, r20, r3
+    cmp r7, r2, r5
+    bb1 eq, r7, ENC
+    addu r3, r3, 1
+    cmp r7, r3, r4
+    bb1 eq, r7, NENC
+    br BUCLECAR
+ENC:
+    or r29, r3, 0
+    br FIN
+NENC:
+    or r29, r4, 0
+    br FIN
+FIN:
+    jmp(r1)
+	
+; -------------------------------------COINCIDENCAD-----------------------------------------------------
+
+
+CoincidenCad:
+    ld r20, r30, 0
+    ld r21, r30, 4
+    and r29, r0, 0
+BUCLECOINCIDEN:
+    ld.bu r5, r20, r29
+    ld.bu r6, r21, r29
+    cmp r7, r5, 0
+    bb1 eq, r7, FIN2
+    cmp r7, r6, 0
+    bb1 eq, r7, FIN2
+    cmp r7, r5, r6
+    bb0 eq, r7, FIN2
+    addu r29, r29, 1
+    br BUCLECOINCIDEN
+FIN2:
+    jmp(r1)
+; -------------------------------------BUSCAMAX---------------------------------------------------------------------------
+
+BuscaMax:
+    PUSH (r1)
+    PUSH (r31)
+    or r31, r30, 0
+    or r28, r0, 0x3192
+    PUSH (r28)
+
+    ld r10, r31, 8
+    ld r11, r31, 12
+    ld r12, r31, 16
+
+    sub r5, r0, 1
+    st r5, r12, 0
+
+    addu r27, r0, r0
+    addu r28, r0, r0
+
+BucBM:
+    ld.bu r20, r10, r11
+    PUSH (r28)
+    PUSH (r11)
+    PUSH (r27)
+    PUSH (r10)
+    PUSH (r20)
+    bsr BuscaCar
+    POP (r20)
+    POP (r10)
+    POP (r27)
+    POP (r11)
+    POP (r28)
+    cmp r5, r29, r11
+    bb1 hs, r5, finBM
+    addu r27, r29, r0
+
+    addu r13, r10, r27
+    addu r14, r10, r11
+
+    PUSH (r11)
+    PUSH (r10)
+    PUSH (r28)
+    PUSH (r27)
+    PUSH (r14)
+    PUSH (r13)
+    bsr CoincidenCad
+    POP (r13)
+    POP (r14)
+    POP (r27)
+    POP (r28)
+    POP (r10)
+    POP (r11)
+    cmp r5, r29, r28
+    bb1 le, r5, contBM
+    cmp r5, r29, 255
+    bb1 le, r5, noLimBM
+    addu r29, r0, 255
+
+noLimBM:
+    addu r28, r29, r0
+    ld r12, r31, 16
+    st r27, r12, 0
+    bb1 ge, r5, finBM
+contBM:
+    addu r27, r27, 1
+    cmp r5, r27, r11
+    bb1 hs, r5, finBM
+    br BucBM
+finBM:
+    addu r29, r28, r0
+
+    or r27, r0, 0x5D7
+    POP (r28)
+
+    or r30, r31, 0
+    POP (r31)
+    POP (r1)
+    jmp (r1)
+
+; -------------------------------------COMPRIME-----------------------------------------------------
+
+
+Comprime:   CPILA()
+            subu r30,r30,36
+PASO1:	;hallar long del texto
+            ld r10,r31,8 ; Cargo dir texto
+            PUSH(r10)
+            bsr LongCad
+            POP(r10)
+            st r29,r31,-4
+PASO2: ;ajustar por exceso a 4
+            divu r11,r29,4
+            mulu r12,r11,4
+            cmp r7,r12,r29
+            bb1 eq, r7,PASO3
+            addu r11,r11,1
+            mulu r12,r11,4
+PASO3:  ;inicializar variable      
+			subu r30,r30,r12
+            ld r10,r31,8 ;cargar texto
+            or r2,r0,8 ; contador de 8
+            or r3, r0,r0; puntero texto
+            or r4, r0, r0; puntero  vl
+            or r5,r0,128; inicializo 2^8, 128
+            or r6, r0,5; contador bytes del mapa bits
+            or r17,r0,8; Cont bits inicializado a  8
+            or r8,r0,5; puntero direccion mapa de bits
+PASO4: ;cargar primeros 8
+			ld.bu r20,r10,r3
+            st.b r20, r30,r4
+            addu r3, r3,1
+            addu r4, r4,1
+            DBNZ(r2,PASO4)
+			
+            st r3,r31,-8; puntero texto
+            st r4,r31,-12; punt VL
+            st r5,r31,-16;  128 = 2^7
+            st r6,r31,-20; cont bytes
+            st r0,r31,-24;  dir para guardar jj
+            st r17,r31,-28; contador de bits
+            st r8,r31,-32; puntero dir map bits
+            st r0,r31,-36; byte actual (para actualizar)           
+PASO5: ;bucle que recorre el texto llamando a buscamax  
+			ld.bu r11, r10, r3
+            cmp r7,r11,r0
+            bb1 eq,r7,CopiaFin
+            ld r12,r31,-24
+            PUSH(r12)
+            PUSH(r3)
+            PUSH(r10)
+            bsr BuscaMax  ;llamas para que dvuelva la subcadena mas larga
+            POP(r10)
+			POP(r3)
+			POP(r12)
+            ld r10,r31,8
+            ld r3,r31,-8
+            ld r4,r31,-12
+            ld r5,r31,-16
+            ld r6,r31,-20
+            ld r12,r31,-24   ;cargas jj 
+            ld r17,r31,-28
+            ld r8,r31,-32
+            ld r9, r31,-36
+            cmp r7,r29,4
+            bb1 lt,r7,Copiar ;mirar si la long devuelta por busca max es menor que 4, si no lo es se comprime
+Comprimir:    
+			ld r21,r12,0; jj a r21
+            mak r22,r21,8<0> ;coges byte menos significativo
+            st.b r22,r30,r4
+            addu r4,r4,1
+            mak r22,r21,8<8>;coges byte mas significativo
+            st.b r22,r30,r4
+            addu r4,r4,1
+            st.b r29,r30,r4
+            addu r4,r4,1
+            st r4,r31,-12;
+            addu r3,r3,r29
+            st r3,r31,-8;
+            addu r9,r9,r5
+            st r9,r31,-36;
+            divu r5,r5,2;
+            st r5,r31,-16;
+            subu r17,r17,1
+            st r17,r31,-28;
+            cmp r7,r17,r0
+            bb1 eq,r7,NextByte
+            br PASO5
+Copiar:     
+			ld.bu r11,r10,r3
+            st.b r11,r30,r4
+            addu r3, r3,1
+            addu r4, r4,1
+            st r3,r31,-8; punt texto
+            st r4,r31,-12; punt vl
+            divu r5,r5,2;
+            st r5,r31,-16;
+            subu r17,r17,1
+            st r17,r31,-28;
+            cmp r7,r17,r0
+            bb1 eq , r7, NextByte
+            br PASO5;
+NextByte:    
+			ld r16, r31,12; dir compilado
+            st.b r9, r16,r8
+            addu r8,r8,1;actualizo dir map
+            st r8,r31,-32;
+            addu r6,r6,1
+            st r6,r31,-20;actualizo cont bytes
+            or r5,r0,128; 
+            st r5,r31,-16;reinicio 2^7
+            or r17,r0,8
+            st r17,r31,-28;
+            st r0,r31,-36;reinicio byte para actualizar
+            br PASO5
+CopiaFin:   
+			cmp r7,r17,8
+            bb1 ne, r7, NextByte
+            ld r16, r31,12;
+            ld r8,r31,-32
+            or r28,r0,r0
+            ld r4,r31,-12
+BucleFin:  
+			ld.bu r11,r30,r28
+            st.b r11,r16,r8
+            addu r8,r8,1
+            addu r28,r28,1
+            cmp r7, r28,r4
+            bb1 eq, r7,Cabecera
+            br BucleFin
+Cabecera: ;PASOS 7 8 9 
+			ld r26,r31,-4
+            st.h r26,r16,0
+            or r28,r0,1
+            st.b r28,r16,2
+            ld r6,r31,-20
+            mak r22,r6,8<0>
+            st.b r22,r16,3
+            mak r22,r6,8<8>
+            st.b r22,r16,4
+PASO11: ;. Retorna dejando en r29 la suma del número de bytes del mapa de bits
+			or r29, r0, r8
+            DPILA()
+            jmp (r1)
+
+; -------------------------------------DESCOMPRIME-----------------------------------------------------
+Descomprime:
+	ld r20, r30, 0 ; dir a com    
+    ld r21, r30, 4 ; dir a desc   
+	ld.bu r4, r20,0 ;r2 ; r2 = 0;addu r2,r2,1
+    ld.bu r5,r20,1  ;r2 ;r2 = 1;addu r2,r2,1
+    addu r29,r4,r5 ; ya que los dos primeros bits de com indican la longitud 
+				   ; de la cadena sin comprimir
+	ld.bu r9, r20, 3;r2 ;r2 = 3, com[r3] y com[r4] bits cabecera ;addu r2,r2,1
+    ld.bu r28,r20,4;r2 ;r2 = 4
+	addu r2,r9,r28 ; R2 = puntero apunta inicio com ,obtienes pos inincial saltando cabecera y mapa de bits
+	or r13, r0,0 ;puntero desc
+	or r14,r0,8 ;Puntero a 8 para que vaya decreciendo
+	ld.bu r15,r20,r2 ;cargar primer byte
+copyFirst8: 
+	cmp r7,r14,0  ; cuando el contacor inicializado a 8 este en 0 acabas
+	bb1 eq,r7,Inicializar
+	st.b r15,r21,r13
+    addu r2, r2, 1
+    addu r13, r13, 1
+	subu r14,r14,1
+	ld.bu r15,r20,r2
+	br copyFirst8  ;mirar dbnz
+;YA HAS COPIADO 8 PRIMEROS -> SIGUIENTE PASO
+Inicializar:
+	or r16,r0,5 ;puntero al mapa de bits
+	or r17,r0,128 ;inicializamos en 2^7
+	or r18,r0,8 ;contador decreciente para recorrer el byte
+	ld r19,r20,r16 ;cargas el primer byte (saltando la cabecera y el mapa de bytes)
+	
+DescBucle:
+	cmp r7,r29,r13 ; miras si el contador desc = longitud
+	bb1 eq,r7,finDescomprime
+	and r10,r19,r17 ;haces un and con el byte actual y el bite 2^7
+	cmp r7,r10,0   ;al hacer un and será cero si en la posicion de mi registro auxiliar r17 en la que hay un uno,
+				   ; y no hay un uno en la misma posicion del byte actual de r19 que estoy mirando
+	bb1 eq,r7,bit0 ;en este caso no se descomprime nada solo se copia
+bit1:
+	ld.bu r23,r20,r2 ;primer byte parte comprimida
+	addu r2,r2,1
+	ld.bu r25,r20,r2 ;segundo byte parte comprimida
+	addu r2,r2,1
+	addu r26,r23,r25 ;obtienes posicion inicial sumando 2 primeros bytes parte comprimida
+	ld.bu r23,r20,r2 ;long cadena comprimida
+	addu r2,r2,1
+Descomprimir:
+	ld.bu r27,r21,r26
+	st.b r27,r21,r13
+	addu r13,r13,1
+	addu r26,r26,1
+	subu r23,r23,1 
+	cmp r7,r23,0
+	bb1 ne, r7,Descomprimir ;mirar dbnz
+	br nestBit
+bit0:
+	ld.bu r15,r20,r2
+	st.b r15,r21,r13
+	addu r2,r2,1
+	addu r13,r13,1
+	br nestBit
+nestBit:	
+	divu r17,r17,2
+	subu r18,r18,1
+	cmp r7,r18,0
+	bb1 ne, r7, DescBucle ;mirar DBNZ
+	or r17,r0,128 ;en caso de que el contador este a cero reinicio los registros auxiliares
+	or r18,r0,8
+	addu r16,r16,1
+	ld.bu r19,r20,r16  ;cargas siguiente byte
+	br DescBucle
+finDescomprime:
+	st.b r0,r21,r13 ;cargas el \0 a desc
+    jmp(r1)

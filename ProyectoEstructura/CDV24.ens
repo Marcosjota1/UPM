@@ -1,0 +1,267 @@
+;MACROS
+org 100
+LEA: MACRO (ra, ETIQ)     
+		 or ra, r0, low(ETIQ) 
+		 or.u ra, ra, high(ETIQ)
+		 ENDMACRO
+LOAD: MACRO (ra, ETIQ)  
+		LEA (ra, ETIQ)
+		ld ra, ra, r0
+		ENDMACRO  
+PUSH: MACRO (ra)
+		subu r30, r30, 4
+		st ra, r30, r0
+		ENDMACRO
+POP: MACRO(ra)
+		ld ra, r30, 0
+		addu r30, r30, 4
+		ENDMACRO		
+;DATOS
+org 1000
+cadena1:  data "Prueba\0"
+cadena2:  data "123456789 123456789 12\0A"
+cadena21: data "\0"
+
+C: data 0xA0;data "*"
+D: data "*" 
+cadena3: data "*2345*78*0\0"
+cadena31: data 0x40302010, 0x80706050, 0xA090 ; PALABRA: 10 20 30 40 50 60 70 80 90 A0
+from: data 1  
+from2: data 0
+to: data 10
+
+cadena4:data "1234567890\0"
+cadena5:data "0123456789\0"
+
+LONGCAD1: ;R29 = 6
+		LEA(r29,100)
+		LEA(r30,86012)
+		LEA(r20, cadena1)
+		PUSH(r20)
+		bsr LongCad
+		POP(r20)
+		stop
+LONGCAD2: ;res = 22; r29=16
+		LEA(r30,86012)
+		LEA(r20, cadena2)
+		PUSH(r20)
+		bsr LongCad
+		POP(r20)
+		stop
+LONGCAD3: ;res=0
+		LEA(r30,86012)
+		LEA(r20, cadena21)
+		PUSH(r20)
+		bsr LongCad
+		POP(r20)
+		stop
+BUSCACAR: LEA(r30,86000) ; R29 = 5
+	LOAD(r2,D)
+	LEA(r21,cadena3)
+	LOAD (r3,from)
+	LOAD (r4,to)
+	PUSH(r4)
+	PUSH(r3)
+	PUSH(r21)
+	PUSH(r2)
+	bsr BuscaCar
+	POP(r2)
+	POP(r21)
+	POP(r3)
+	POP(r4)
+	stop
+BUSCACAR2:LEA(r30,86000) ; R29 = A
+	LOAD(r2,C)
+	LEA(r21,cadena3)
+	LOAD (r3,from2)
+	LOAD (r4,to)
+	PUSH(r4)
+	PUSH(r3)
+	PUSH(r21)
+	PUSH(r2)
+	bsr BuscaCar
+	POP(r2)
+	POP(r21)
+	POP(r3)
+	POP(r4)
+	stop
+	
+BUSCACAR3: LEA(r30,86000) ; R29 = 9
+	LOAD(r2,C)
+	LEA(r21,cadena31)
+	LOAD (r3,from2)
+	LOAD (r4,to)
+	PUSH(r4)
+	PUSH(r3)
+	PUSH(r21)
+	PUSH(r2)
+	bsr BuscaCar
+	POP(r2)
+	POP(r21)
+	POP(r3)
+	POP(r4)
+	stop
+COINCIDENCAD1:LEA(r30,86008)  ; r29=0
+			LEA(r20, cadena4)
+			LEA(r21, cadena5)
+			PUSH(r20)
+			PUSH(r21)
+			bsr CoincidenCad
+			POP(r21)
+			POP(r20)
+			stop
+COINCIDENCAD2:LEA(r30,86008)  ; R29=10=A
+			LEA(r20, cadena4)
+			LEA(r21, cadena4)
+			PUSH(r20)
+			PUSH(r21)
+			bsr CoincidenCad
+			POP(r21)
+			POP(r20)
+			stop
+
+;CODIGO
+org 2000
+Descomprime: jmp(r1)
+Comprime: jmp(r1)
+Verifica: jmp(r1)
+
+LongCad: ld r20,r30,0   
+		and r29,r0,0 ;usamos de contador
+BUCLELONG:  ld.bu r2,r20,0 
+		cmp r3,r2,r0 
+		bb1 eq,r3,FINBUCLE
+		addu r29,r29,1  
+		addu r20,r20,1 
+		br BUCLELONG
+FINBUCLE: jmp(r1)
+
+
+	
+BuscaCar: ld r2,r30,0 ;C
+		  ld r20,r30,4 ;cadena
+		  ld r3,r30,8 ;from     ; --> cargar parametros en pila
+		  ld r4,r30,12 ;to
+BUCLECAR: ld.bu r5,r20,r3   ; te carga en r5 el valor actual, valor + puntero
+	   cmp r7,r2,r5
+	   bb1 eq, r7, ENC ; Miras si son iguales
+	   addu r3,r3,1  ;Incrementas puntero si no !encontrado
+	   cmp r7,r3,r4   ; Miras si from = to, a lo mejor poner esto principio, ya que from puede ser = to(CASO RARO NO CREO)
+	   bb1 eq,r7,NENC
+	   br BUCLECAR
+ENC: or r29,r3,0 ; en r3 tendras puntero(inicializado en from), devuelves la distancia de caracteres de ref hasta encontar C
+	  br FIN	
+NENC: or r29,r4,0 ; si no se encuentra devolver to
+	  br FIN
+FIN:jmp(r1)
+
+
+CoincidenCad: ld r20,r30,0
+			  ld r21,r30,4
+			  and r29,r0,0 ;Contador y puntero (2x1)
+BUCLECOINCIDEN: ld.bu r5,r20,r29  ; Carga valor cadena+puntero, para ir avanzando
+			ld.bu r6,r21,r29
+			cmp r7,r5,0
+			bb1 eq, r7, FIN2
+			cmp r7,r6,0
+			bb1 eq, r7, FIN2
+			cmp r7, r5, r6 
+			bb0 eq, r7, FIN2 ; si son iguales no hace nada, si distintos va a FIN// valdria CREO bb1 ne, r7, FIN
+			addu r29,r29,1
+			br BUCLECOINCIDEN			
+FIN2: jmp(r1)
+
+
+BuscaMax:
+	PUSH (r1)
+	PUSH (r31)
+	or   r31, r30, 0
+	or   r28, r0, 0x3192
+	PUSH (r28)
+
+	ld   r10, r31, 8;  REF
+	ld   r11, r31, 12; MAX
+	ld   r12, r31, 16; Dir(JJ)
+
+	sub  r5, r0, 1		; guarda -1 en *JJ por si no se
+	st   r5, r12, 0		; encuentran coincidencias
+
+	addu r27, r0, r0  ; P
+	addu r28, r0, r0  ; L
+
+BucBM:
+	ld.bu r20, r10, r11	; C=REF(max)
+
+				; Reserva registros que
+				; necesita conservar
+	PUSH (r28) 	    	; L
+	PUSH (r11)	    	; MAX
+
+	     		    	; Parámetros de BuscaCar
+	PUSH (r27)	    	; P
+	PUSH (r10)	    	; REF
+	PUSH (r20)	   	; C
+	bsr  BuscaCar
+	POP  (r20)
+	POP  (r10)
+	POP  (r27)
+
+	POP  (r11)		; Recupera registros
+	POP  (r28)	        ; salvaguardados
+
+	cmp  r5, r29, r11	; nuevo P es >= MAX ??
+	bb1  hs, r5, finBM
+	addu r27, r29, r0	; P = nuevo P
+	
+	addu r13, r10, r27	; *REF(P)
+	addu r14, r10, r11 	; *REF(max)	
+
+	PUSH (r11)     		; Reserva registros que
+	PUSH (r10)		; necesita conservar
+	PUSH (r28)
+	PUSH (r27)
+	
+	PUSH (r14)		; Parámetros de CoincidenCad
+	PUSH (r13)
+	bsr  CoincidenCad
+	POP  (r13)
+	POP  (r14)
+	
+	POP  (r27)		; Recupera registros
+	POP  (r28)		; salvaguardados
+	POP  (r10)
+	POP  (r11)
+
+	cmp r5, r29, r28	; Comprueba si longitud > L
+	bb1 le, r5, contBM	; Si no lo es, continúa
+	cmp r5, r29, 255	; Comprueba si longitud > 255
+	bb1 le, r5, noLimBM	; Si no lo es, continúa
+	addu r29, r0, 255	; Si lo es, limita su valor a 255
+	
+noLimBM:
+	addu r28, r29, r0	; actualiza L
+	ld   r12, r31, 16	; Dir(JJ)
+	st   r27, r12, r0	; actualiza P en *JJ
+	bb1 ge, r5, finBM	; Si coincidencia >= 255 termina
+contBM: 
+	addu r27, r27, 1	; Pasa al siguiente carácter
+	cmp  r5, r27, r11	; Es P>=max ?
+	bb1  hs, r5, finBM
+	
+	br   BucBM   		; Nueva búsqueda del primer carácter
+
+finBM:
+	addu r29, r28, r0	; asigna L al valor de retorno r29
+	  
+	or   r27, r0, 0x5D7
+	POP  (r28)
+
+	or   r30, r31, 0
+	POP  (r31)
+	POP  (r1)
+	jmp  (r1)
+
+
+;FIN CODIGO
+
+

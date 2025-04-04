@@ -1,0 +1,1 @@
+echo "El contenido de la variable MIVAR es: $MIVAR".

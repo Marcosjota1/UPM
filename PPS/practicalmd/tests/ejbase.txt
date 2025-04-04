@@ -1,0 +1,19 @@
+  1 2013-05-30 20:47:43 weka.gui.Main main
+  2 INFO: Logging started
+  3 ---Registering Weka Editors---
+  4 Trying to add database driver (JDBC): RmiJdbc.RJDriver - Error, not in CLASSPATH?
+  5 Trying to add database driver (JDBC): jdbc.idbDriver - Error, not in CLASSPATH?
+  6 Trying to add database driver (JDBC): com.mckoi.JDBCDriver - Error, not in CLASSPATH?
+  7 Trying to add database driver (JDBC): org.hsqldb.jdbcDriver - Error, not in CLASSPATH?
+  8 2013-05-30 20:47:56 weka.gui.explorer.Explorer <init>
+  9
+ 10 INFO: Weka Explorer
+ 11 2013-05-30 20:47:56 weka.gui.explorer.Explorer <init>
+ 12 INFO: (c) 1999-2009 The University of Waikato, Hamilton, New Zealand
+ 13 2013-05-30 20:47:56 weka.gui.explorer.Explorer <init>
+ 14 INFO: web: http://www.cs.waikato.ac.nz/~ml/weka/
+ 15 2013-05-30 20:47:56 weka.gui.explorer.Explorer <init>
+ 16 INFO: Started on jueves, 30 mayo 2013
+ 17 2013-05-30 20:48:54 weka.gui.explorer.PreprocessPanel$14 run
+ 18 INFO: Base relation is now cesta (1000 instances)
+
