@@ -1,0 +1,159 @@
+package aed.skiplist;
+
+import java.util.Random;
+import java.util.Iterator;
+import es.upm.aedlib.Position;
+import es.upm.aedlib.Entry;
+import es.upm.aedlib.InvalidKeyException;
+import es.upm.aedlib.map.Map;
+
+import es.upm.aedlib.positionlist.*;
+
+
+public class SkipListMap<K extends Comparable<K>,V> implements Map<K,V> {
+
+  private K min;  // Un valor menor que cada valor que podria tener una clave
+  private K max;  // Un valor mayor que cada valor que podria tener una clave
+  private PositionList<PositionList<Node<K,V>>> skipList;
+  private Random rnd;
+  private NodePositionList aux;
+
+  public SkipListMap(K min, K max) {
+    this.min = min;
+    this.max = max;
+    this.skipList = new NodePositionList<>();
+    this.rnd = new Random();
+    this.aux = new NodePositionList<>();
+  }
+
+  public int size() {
+    return size();
+  }
+
+  public boolean isEmpty() {
+    return size()==0;
+  }
+
+  public boolean containsKey(Object objKey) throws InvalidKeyException {
+    // No hace falta modificar este metodo
+    throw new UnsupportedOperationException();
+  }
+
+  public V put(K key, V value) throws InvalidKeyException {
+      if (key == null) {
+          throw new InvalidKeyException();
+      } else {
+          Position<PositionList<Node<K, V>>> aux = skipList.first();
+          if (skipList.isEmpty()) {
+              skipList.addLast(aux);
+          } else {
+              // Search
+          }
+      }
+      return value;
+  }
+
+  public K get(K key) throws InvalidKeyException {
+      if (skipList.isEmpty()) {
+          return null;
+      } else {
+          boolean found = false;
+          Position<PositionList<Node<K, V>>> aux = skipList.first();
+          while ((aux != null && !found)) {
+              if (aux.element().getElement().getKey().equals(key)) {
+                  found = true;
+              } else {
+                  aux = skipList.next(aux);
+              }
+          }
+          if (found) {
+              return aux.element().getElement().getKey();
+          } else {
+              return null;
+          }
+      }
+  }
+
+  public V remove(K key) throws InvalidKeyException {
+      V v = null;
+      if (key == null) {
+          throw new InvalidKeyException();
+      } else if{
+		  v = elements.getKey().getValue(); 
+	  	  skipList.remove(key.position());
+      }		  
+  }
+                                                    
+	public Iterable<K> keys() {
+		PositionList<K> nueva = new NodePositionList<K>();
+		for (Position<Entry<K, V>> cursor = elements.first(); cursor != null; cursor = elements.next(cursor)) {
+			if (nueva.isEmpty()) {
+				nueva.addFirst(cursor.element().getKey());
+			} else {
+				nueva.addLast(cursor.element().getKey());
+			}
+		}
+		return nueva;
+	}
+
+  public Iterable<Entry<K,V>> entries() {
+    return null;
+  }
+
+  public Iterator<Entry<K,V>> iterator() {
+    return null;
+  }
+
+  public String toString() {
+    return skipList.toString();
+  }
+
+  // Recomendamos terminar y usar este metodo privado
+  private PositionList<Node<K,V>> addEmptyList() {
+	  this.aux = new NodePositionList<K,V>();
+    return null;
+  }
+  
+  // Recomendamos terminar y usar este metodo privado
+  private PositionList<Position<Node<K, V>>> search(K key) {
+	    PositionList<Position<Node<K, V>>> transitionPositions = new NodePositionList<>(); // Lista de posiciones de transición
+	    PositionList<Position<Node<K, V>>> list = skipList.first(); // Lista superior (menos claves)
+	    Position<Position<Node<K, V>>> pos = list.first(); // Posición más a la izquierda en la lista superior
+	    boolean terminado = false;
+
+	    do {
+	        while (key.compareTo(next(pos).getElement().getElement().getKey()) >= 0) {
+	            pos = next(pos);
+	        }
+	        transitionPositions.addLast(pos); // Agregar la posición antes de la transición a la lista de posiciones de transición
+	        if (getBelow(pos) != null) {
+	            pos = getBelow(pos);
+	            list = next(list);
+	        } else {
+	            terminado = true;
+	        }
+	    } while (!terminado);
+
+	    return transitionPositions;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

@@ -1,0 +1,848 @@
+package EjemplosClase;
+
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import es.upm.aedlib.positionlist.NodePositionList;
+import es.upm.aedlib.positionlist.PositionList;
+import es.upm.aedlib.tree.BinaryTree;
+import es.upm.aedlib.Pair;
+import es.upm.aedlib.Position;
+import es.upm.aedlib.indexedlist.IndexedList;
+
+public class Recursividad {
+
+	public static <E> void deleteAllRec(NodePositionList<E> list, E elem){
+		if(list!=null){
+			deleteAllRec(list, elem, list.first());
+		}
+	}
+
+	public static <E> void deleteAllRec(NodePositionList<E> list, E elem, Position<E> cursor){	
+		if(eqNull(elem, cursor.element())){
+			Position<E> aux=list.next(cursor);
+			list.remove(cursor);
+			deleteAllRec(list, elem, aux);
+		}else if(cursor!=null){
+			deleteAllRec(list, elem, list.next(cursor));
+		}
+	}
+
+	public static <E> boolean eqNull(E elem1, E elem2){
+		return elem1==elem2 || elem1!=null && elem1.equals(elem2);
+	}
+	
+
+	public static <E> PositionList<E> reverseListRec(PositionList<E> list){
+		return reverseListRec(list, list.first(), new NodePositionList<E>());
+	}
+
+	public static <E> PositionList<E> reverseListRec(PositionList<E> list, Position<E> cursor, NodePositionList<E> resultado){
+		if(cursor==null){
+			return resultado;
+		}else{
+			resultado.addFirst(cursor.element());
+			return reverseListRec(list, list.next(cursor), resultado);
+		}
+	}
+	
+	public static <E> void voidReverseListRec(PositionList<E> list){
+		voidReverseListRec(list, list.first(), new NodePositionList<E>());
+	}
+		
+	public static <E> void voidReverseListRec(PositionList<E> list, Position<E> cursor, NodePositionList<E> resultado) {
+		if(cursor!=null){
+			resultado.addFirst(cursor.element());
+			voidReverseListRec(list, list.next(cursor), resultado);
+		}else{
+			list=resultado;
+		}
+	}
+	
+	public static <E> void reverseInPlaceRec(PositionList<E> list){
+		reverseInPlaceRec(list, list.first(), list.last());
+	}
+
+	public static <E> void reverseInPlaceRec(PositionList<E> list, Position<E> cursorInico, Position<E> cursorFinal){
+
+		if(cursorInico!=null && cursorFinal!=null && (eqNull(cursorInico.element(), cursorFinal.element()) || eqNull(list.next(cursorFinal).element(), cursorInico.element()))){
+			E aux=cursorInico.element();
+			list.set(cursorInico, cursorFinal.element());
+			list.set(cursorFinal, aux);
+			reverseInPlaceRec(list, list.next(cursorInico), list.prev(cursorFinal));
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static <E> void trimToSizeRec(PositionList<E> list, int size) {
+		if(size>=0 && list!=null){
+			trimToSizeRec(list, size, list.last());
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public static <E> void trimToSizeRec(PositionList<E> list, int size, Position<E> cursor) {
+		if(size!=list.size()){
+			list.remove(cursor);
+			trimToSizeRec(list, size, list.last());
+		}
+	}
+	
+	public static <E> PositionList<E> concatR(PositionList<E> list1, PositionList<E> list2){
+		if(list1!=null && list2!=null){
+			return concatRecR(list1, list2, list2.first());
+		}
+		return null;
+	}
+
+	public static <E> PositionList<E> concatRecR(PositionList<E> list1, PositionList<E> list2, Position<E> cursor){
+		if(list2==null){
+			return new NodePositionList<E>();
+		}
+		else{
+			list1.addLast(cursor.element());
+			return concatRecR(list1, list2, list2.next(cursor));
+		}
+	}
+
+	public <E> void concat(PositionList<E> list1, PositionList<E> list2){
+		if(list1!=null && list2!=null){
+			concatRec(list1, list2, list2.first());
+		}
+	}
+
+	public <E> void concatRec(PositionList<E> list1, PositionList<E> list2, Position<E> cursor){
+		if(list2!=null){
+			list1.addLast(cursor.element());
+			concatRec(list1, list2, list2.next(cursor));
+		}
+	}
+
+	public int sumaElementosPositivos (PositionList<Integer> list){
+		if(list==null){
+			throw new IllegalArgumentException(); 
+		}
+		return sumaElementosPositivosRec(list, list.first());
+	}
+
+	public int sumaElementosPositivosRec (PositionList<Integer> list, Position<Integer> cursor){
+		if(cursor==null){
+			return 0;
+		}
+		if(cursor.element()==null || cursor.element()<0){
+			return sumaElementosPositivosRec(list, list.next(cursor));
+		}else{
+			return cursor.element() + sumaElementosPositivosRec(list, list.next(cursor));
+		}
+	}
+
+	public int max(PositionList<Integer> list){
+		if(list==null || list.size()==0){
+			throw new IllegalArgumentException(); 
+		}
+		return maxRec(list, list.first());
+	}
+
+	public int maxRec(PositionList<Integer> list, Position<Integer> cursor){
+		if(eqNull(cursor.element(), list.last().element())){
+			return cursor.element();
+		}
+		return Math.max(cursor.element(), maxRec(list, list.next(cursor)));
+	}
+
+	public static PositionList<Integer> flatNub (PositionList<PositionList<Integer>> list) {
+		PositionList<Integer> res = new NodePositionList<Integer>();
+		if (list.size() == 0) {
+			return res;
+		}
+		return flatNubRec(list, list.first());
+	} 
+
+	public static PositionList<Integer> flatNubRec (PositionList<PositionList<Integer>> list, Position<PositionList<Integer>> cursor){
+		if(list.isEmpty()){
+			return new NodePositionList<Integer>();
+		}
+		else{
+			return concatR(cursor.element(), flatNubRec(list, list.next(cursor))); 
+		}
+	}
+
+	public static PositionList<Pair<Integer, Integer>> duplica(PositionList<Integer> list){
+		if(list==null){
+			throw new IllegalArgumentException(); 
+		}
+		PositionList<Pair<Integer, Integer>> res = new NodePositionList<Pair<Integer, Integer>>();
+		return duplicaRec(list, list.first(), res);
+	}
+
+	public static PositionList<Pair<Integer, Integer>> duplicaRec(PositionList<Integer> list, Position<Integer> cursor, PositionList<Pair<Integer, Integer>> res){
+		if(cursor==null){
+			return res;
+		}
+		else{
+			res.addLast(new Pair<Integer, Integer>(cursor.element(), cursor.element()));
+			return duplicaRec(list, list.next(cursor), res);
+		}
+	}
+	private static boolean eqNull2(Object o1, Object o2) 
+	{
+		return o1 == o2 || o1 != null && o1.equals(o2);
+	}
+
+	public static boolean esPar (int i)
+	{
+		return i%2==0;
+	}
+
+	public static <E> boolean equals(
+			PositionList<E> l1, 
+			PositionList<E> l2) 
+	{
+		if (l1 == l2) {
+			return true;
+		}
+		if (l1.size() != l2.size()) {
+			return false;
+		}
+		return equals(l1,l2,l1.first(),l2.first());
+	}
+
+	public static <E> boolean equals(
+			PositionList<E> l1, 
+			PositionList<E> l2, 
+			Position<E> c1, 
+			Position<E> c2) {
+		if (c1 == null && c2 == null) {
+			return true;
+		}
+		if (!eqNull(c1.element() ,c2.element())) {
+			return false;
+		}
+		return equals(l1,l2,l1.next(c1),l2.next(c2));
+	}
+
+	public static <E,F> boolean equalsMap(
+			PositionList<E> l1, 
+			PositionList<F> l2,
+			Function<E,F> f) 
+	{
+		if (l1 == l2) {
+			return true;
+		}
+		if (l1.size() != l2.size()) {
+			return false;
+		}
+		return equalsMap(l1,l2,l1.first(),l2.first(),f);
+	}
+
+	public static <E,F> boolean equalsMap(
+			PositionList<E> l1, 
+			PositionList<F> l2, 
+			Position<E> c1, 
+			Position<F> c2,
+			Function<E,F> f)  
+	{
+		if (c1 == null && c2 == null) {
+			return true;
+		}
+		if (!eqNull(f.apply(c1.element()) ,c2.element())) {
+			return false;
+		}
+		return equalsMap(l1,l2,l1.next(c1),l2.next(c2), f);
+	}
+
+	public static <E> boolean inverse(
+			PositionList<E> l1, 
+			PositionList<E> l2) 
+	{
+		if (l1 == l2) {
+			return true;
+		}
+		if (l1.size() != l2.size()) {
+			return false;
+		}
+		return inverse(l1,l2,l1.first(),l2.last());
+	}
+
+	public static <E> boolean inverse (
+			PositionList<E> l1, 
+			PositionList<E> l2, 
+			Position<E> c1, 
+			Position<E> c2) {
+		if (c1 == null && c2 == null) {
+			return true;
+		}
+		if (!eqNull(c1.element() ,c2.element())) {
+			return false;
+		}
+		return inverse(l1,l2,l1.next(c1),l2.prev(c2));
+
+	}
+
+
+	public static int sumaCol (PositionList<Integer> col) 
+	{
+		if (col == null)
+			return -1;
+		return sumaColRec (col, col.first());
+	}
+
+
+	public static int sumaColRec (PositionList<Integer> col, 
+			Position<Integer> cursor) 
+	{
+
+		if (cursor == null) 
+			return 0;
+		else
+			return cursor.element() + sumaColRec (col, col.next(cursor));
+	}
+
+	public static boolean todosParesCol (Iterable<Integer> col) 
+	{
+		return todosParesColRec (col, col.iterator());
+	}
+
+	public static boolean todosParesColRec (
+			Iterable<Integer> col, Iterator<Integer> it) 
+	{
+		if (!it.hasNext()) 
+			return true;
+		else
+		{
+			if (!esPar(it.next()))
+				return false;
+			else
+				return todosParesColRec (col, it);
+		}
+	}
+
+	public static <E> boolean todosPredCol (
+			Iterable<E> col,
+			Predicate<E> p) 
+	{
+		return todosPredCol (col.iterator(),p);
+	}
+	public static <E> boolean todosPredCol (
+			Iterator<E> it,
+			Predicate<E> p) 
+	{
+		if (!it.hasNext()) 
+			return true;
+		else
+		{
+			if (!p.test(it.next()))
+				return false;
+			else
+				return todosPredCol (it,p);
+		}
+	}
+
+	public static <E extends Comparable<E>>int cuantosEnRango (PositionList<E> list, E a, E b) {
+		if (b.compareTo(a)<0) {
+			return 0;
+		}
+		return cuantosEnRango(list, a, b, list.first());
+	}
+
+	private static <E extends Comparable<E>> int cuantosEnRango(
+			PositionList<E> list,
+			E a, E b,
+			Position<E> cursor) 
+	{
+		if (cursor == null) {
+			return 0;
+		}
+		return ((a.compareTo(cursor.element())<=0 && b.compareTo(cursor.element()) >= 0) ? 1 : 0) +
+				cuantosEnRango(list, a, b, list.next(cursor));
+	}
+
+
+	public static <E> PositionList<E> copiar(
+			PositionList<E> list) 
+	{
+		if (list == null) { 
+			return null;
+		} 
+		return copiar(list, list.first());
+	}
+
+
+	private static <E> PositionList<E> copiar(
+			PositionList<E> list, 
+			Position<E> cursor) {
+		if (cursor == null) {
+			return new NodePositionList<E>(); 
+		}
+
+		PositionList<E> result = copiar(list, list.next(cursor));
+		result.addFirst(cursor.element()); 
+		return result; 
+
+	}
+
+	public static <E extends Comparable<E>> void insert(PositionList<E> list, 
+			E elem) {
+		if (list != null) 
+			insert(list, elem, list.first());
+	}
+
+	private static <E extends Comparable<E>> void insert(
+			PositionList<E> list, 
+			E elem, 
+			Position<E> cursor) 
+	{
+		if (cursor == null) {  
+			list.addLast(elem); 
+		}
+		else if (elem.compareTo(cursor.element())<=0) { 
+			list.addBefore(cursor, elem); 
+		}
+		else {
+			insert(list, elem, list.next(cursor));
+		}
+	}
+
+	public static <E,F> Iterable<F> mapReduce(
+			Iterable<E> l1, 
+			Predicate<E> pred, 
+			Function<E,F> f)
+	{
+
+		if(l1 ==null)
+			throw new IllegalArgumentException();;
+			PositionList<F> res = new NodePositionList<F>();
+			mapReduce(l1.iterator(), pred, f, res);
+			return res;
+	}
+
+
+	private static <E,F> void mapReduce (
+			Iterator<E> it1, 
+			Predicate<E> pred, 
+			Function<E,F> f, 
+			PositionList<F> res)
+
+	{
+		if(it1.hasNext()) {
+			E elem1 =it1.next();
+
+			if(pred.test(elem1) )
+				res.addLast(f.apply(elem1));
+			mapReduce(it1, pred, f, res);
+		}
+	}
+
+	public static <E,F> Iterable<F> mapFilter(
+			Iterable<E> l1, 
+			Predicate<E> pred, 
+			Function<E,F> f)
+	{
+
+		if(l1 == null)
+			throw new IllegalArgumentException();
+
+		PositionList<F> res = new NodePositionList<F>();
+		mapFilter(l1.iterator(), pred, f, res);
+		return res;
+	}
+
+
+	private static <E,F> void mapFilter (
+			Iterator<E> it1, 
+			Predicate<E> pred, 
+			Function<E,F> f, 
+			PositionList<F> res)
+
+	{
+		if(it1.hasNext() ) {
+			E elem1 =it1.next();
+			if(pred.test(elem1))
+				res.addLast(f.apply(elem1));
+			mapFilter(it1, pred, f, res);
+		}
+	}
+
+
+	public static <A,B>  PositionList<B> map (
+
+			Function<A,B> f,
+			PositionList<A> col)
+	{
+		if (col == null)
+			return null;
+
+		return map (col, f, col.first());
+	}
+	public static <A,B>  void map (
+			PositionList<A> col, 
+			Function<A,B> f, 
+			PositionList<B> res)
+	{
+		if (col != null)
+			res = map (f,col);
+	}
+
+	private static <A,B>  PositionList<B> map (
+			PositionList<A> col, 
+			Function<A,B> f, 
+			Position<A> cursor)
+	{
+		if (cursor == null)
+			return new NodePositionList<B>();
+		else
+		{
+			A e = cursor.element();
+			PositionList<B> res = map (col, f, col.next(cursor));
+			if (e!=null)
+				res.addFirst(f.apply(e));
+			else
+				res.addFirst(null);
+			return res;
+		}
+	}
+
+
+	public static <A,B>  PositionList<B> map3 (
+			Function<A,B> f, PositionList<A> col)
+	{
+		if (col == null)
+			return null;
+
+		return map (f,col.iterator());
+	}
+
+	public static <A,B>  PositionList<B> map (
+			Function<A,B> f,
+			Iterator<A> col
+			)
+	{
+		if (!col.hasNext())
+			return new NodePositionList<B>();
+		else
+		{
+			A e = col.next();
+			PositionList<B> res = map(f, col);
+			res.addFirst(f.apply(e));
+			return res;
+		}
+	}
+
+
+	public static <A,B>  PositionList<B> map4 (
+			Function<A,B> f, PositionList<A> col)
+	{
+		if (col == null)
+			return null;
+
+		PositionList<B> resultado = new NodePositionList<B>();
+		map (f, col.iterator(),resultado);
+		return resultado;
+	}
+	private static <A,B>  void map (
+			Function<A,B> f, Iterator<A> col, 
+			PositionList<B> res)
+	{
+		if (col.hasNext())
+		{
+			A e = col.next();
+			map (f, col, res);
+			res.addFirst(f.apply(e));
+		}	
+	}
+	public static <A>  PositionList<A> filter (
+			Predicate<A> f,
+			PositionList<A> col
+			)
+	{
+		if (col == null)
+			return null;
+
+		return filter (col,f,  col.first());
+	}
+
+	public static <A>  PositionList<A> filter2 (
+			Predicate<A>  f, 
+			PositionList<A> col)
+	{
+		if (col == null)
+			return null;
+
+		PositionList<A> resultado = new NodePositionList<A>();
+		filter (col, f,  col.first(),resultado);
+		return resultado;
+	}
+	private static <A>  PositionList<A> filter (
+			PositionList<A> col, 
+			Predicate<A> f, 
+			Position<A> cursor)
+	{
+		if (cursor == null)
+			return new NodePositionList<A>();
+		else
+		{
+			A e = cursor.element();
+			PositionList<A> res = filter (col, f, col.next(cursor));
+			if (f.test(e))
+				res.addFirst(e);
+			return res;
+		}
+
+	}
+	private static <A,B>  void filter (
+			PositionList<A> col, 
+			Predicate<A> f, 
+			Position<A> cursor, 
+			PositionList<A> res)
+	{
+		if (cursor != null)
+		{
+			A e = cursor.element();
+			filter (col, f, col.next(cursor), res);
+			if (f.test(e))
+				res.addFirst(e);
+		}			
+	}
+
+
+	
+
+	private static <A> void concat (
+			PositionList<A> l, 
+			Position<A> cursorL, 
+			PositionList<A> m, 
+			Position<A> cursorM, 
+			PositionList<A> res)
+	{
+		if (cursorL != null)
+		{
+			res.addLast(cursorL.element());
+			concat(l, l.next(cursorL), m, cursorM, res);		
+		}
+		else if (cursorM != null)
+		{
+			res.addLast(cursorM.element());
+			concat(l, cursorL, m, m.next(cursorM), res);		
+		}
+	}
+
+	public static <A extends Comparable<A>> PositionList<A> sort(
+			PositionList<A> l1, 
+			PositionList<A> l2)
+	{
+		if (l1 == null || l2==null)
+			return null;
+		else
+		{
+			PositionList<A> res = new NodePositionList<A>();
+			sort (l1, l2, res, l1.first(), l2.first());
+			return res;
+		}
+	}
+
+	private static <A extends Comparable<A>> void sort(
+			PositionList<A> l1, 
+			PositionList<A> l2, 
+			PositionList<A> res,
+			Position<A> cursor1, 
+			Position<A> cursor2)
+	{
+		if (cursor1 != null || cursor2!=null)
+		{
+			if (cursor1 == null)
+			{
+				res.addLast(cursor2.element());
+				cursor2 = l2.next(cursor2);
+			}
+			else if (cursor2 == null)
+			{
+				res.addLast(cursor1.element());
+				cursor1 = l1.next(cursor1);
+			}
+			else if (cursor1.element().compareTo(cursor2.element()) < 0)
+			{
+				res.addLast(cursor1.element());
+				cursor1 = l1.next(cursor1);
+			}	
+			else
+			{ 
+				res.addLast(cursor2.element());
+				cursor2 = l2.next(cursor2);
+			}
+			sort (l1,l2, res, cursor1, cursor2);		    
+		} 
+	}
+
+
+	public static <A,B> B reduce (
+			Iterator<A> col,
+			BiFunction<A,B,B> f, 
+			B val)
+	{
+		if (!col.hasNext())
+			return val;
+		else
+		{
+			A x = col.next();
+			if (x != null) 
+				return reduce (col, f, f.apply(x,val) );
+			else
+				return reduce (col, f, val);
+		}
+
+	}
+
+
+	public static <A,B> B accumulate (
+			Iterator<A> col, 
+			BiFunction<A,B,B> f, 
+			B val)
+	{
+		if (!col.hasNext())
+			return val;
+		else
+			return f.apply(col.next(), accumulate (col, f, val));
+	}
+
+
+
+	public static <A,B> B reduce (
+			PositionList<A> col,
+			BiFunction<A,B,B> f, 
+			B neutro
+			)
+	{
+		if (col != null)
+			return reduce (col, f, neutro, col.first());
+		else
+			return null;
+	}
+	
+	private static <E> boolean cumpleElemento (
+			BinaryTree<E> tree, Position <E> n, Predicate<E> p) {
+	if (p.test(n.element())) return true;
+	if (tree.isExternal(n)) return false;
+
+	boolean found = false;
+
+	if (tree.hasLeft(n)) {
+		found = cumpleElemento(tree, tree.left(n),p); 
+	}
+	if (!found && tree.hasRight(n)) {
+		found = cumpleElemento(tree, tree.right(n),p);
+	}
+
+	return found;
+}
+	private static <A,B> B reduce (
+			PositionList<A> col,
+			BiFunction<A,B,B> f,
+			B neutro,  
+			Position<A> cursor)
+	{
+		if (cursor == null)
+			return neutro;
+		else
+		{
+			A x = cursor.element();
+			if (x != null) 
+				return f.apply(cursor.element(), reduce(col, f, neutro, col.next(cursor)));
+			else
+				return reduce (col, f, neutro, col.next(cursor));
+		}	
+	}
+	private static <A,B> B reduce (
+			BinaryTree<A> tree,
+	//	TriFunction<A,B,B,B> f,
+			Predicate<Position<A>> pred,
+			B neutro,  
+			Position<A> n)
+	{
+		if (pred.test(n))
+			return neutro;
+		
+		B hi = null;
+		if (tree.hasLeft(n)) {
+		//	hi = reduce(tree, f, pred, neutro, tree.left(n)); 
+		}
+		B hd = null;
+		if (tree.hasRight(n)) {
+	//		hd = reduce(tree, f, pred, neutro, tree.right(n)); 
+		}
+	//	return f.apply(n.element(), hi, hd);
+		return null;
+	}
+
+	public static <A,B> B accumulate (
+			PositionList<A> col,
+			BiFunction<A,B,B> f, 
+			B neutro)
+	{
+		if (col != null)
+			return accumulate (col, f, neutro, col.first());
+		else
+			return null;
+	}
+
+
+	private static <A,B> B accumulate (
+			PositionList<A> col, 
+			BiFunction<A,B,B> f, 
+			B acum, 
+			Position<A> cursor)
+	{
+		if (cursor == null)
+			return acum;
+		else
+			return accumulate(col,f,f.apply(cursor.element(),acum), col.next(cursor));
+	}
+
+	public static <E> PositionList<E> ordenar(PositionList<E> list, Comparator<E> cmp) {
+		if (list == null || cmp == null) {
+			throw new IllegalArgumentException();
+		}
+		PositionList<E> res = new NodePositionList<>();
+		for (E e : list) {
+			insertarEnOrden(res, cmp, e);
+		}
+		return res;
+	}
+
+	private static <E> void insertarEnOrden(PositionList<E> list, Comparator<E> cmp, E e) {
+		Position<E> cursor = list.first();
+		while (cursor != null && cmp.compare(cursor.element(), e) < 0) {
+			cursor = list.next(cursor);
+		}
+		if (cursor != null) {
+			list.addBefore(cursor, e);
+		} else {
+			list.addLast(e);
+		}
+	}
+
+}
+
+

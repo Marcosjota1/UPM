@@ -1,0 +1,150 @@
+package aed.treepriorityqueue;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import es.upm.aedlib.Position;
+import es.upm.aedlib.Entry;
+import es.upm.aedlib.EntryImpl;
+import es.upm.aedlib.tree.*;
+
+public class TreePriorityQueue<K extends Comparable<K>, V> implements PriorityQueue<K, V> {
+
+    private BinaryTree<Entry<K, V>> t;
+    private Position<Entry<K, V>> lastPos;
+    private int tam;
+
+    public TreePriorityQueue() {
+        t = new LinkedBinaryTree<>();
+        lastPos = null;
+        tam = 0;
+    }
+
+    public int size() {
+        return tam;
+    }
+
+    public boolean isEmpty() {
+        return tam == 0;
+    }
+
+    public Entry<K, V> first() throws EmptyPriorityQueueException {
+        if (isEmpty()) {
+            throw new EmptyPriorityQueueException();
+        }
+        return t.root().element();
+    }
+
+    public void enqueue(K k, V v) {
+        Entry<K, V> newEntry = new EntryImpl<>(k, v);
+        if (isEmpty()) {
+            t.addRoot(newEntry);
+            lastPos = t.root();
+        } else {
+            insertBelow(newEntry, lastPos);
+            bubbleUp(lastPos);
+        }
+        tam++;
+    }
+
+    private void insertBelow(Entry<K, V> entry, Position<Entry<K, V>> p) {
+        if (t.left(p) == null) {
+            t.insertLeft(p, entry);
+        } else if (t.right(p) == null) {
+            t.insertRight(p, entry);
+        } else {
+            insertBelow(entry, p);
+        }
+    }
+
+    private void bubbleUp(Position<Entry<K, V>> p) {
+        while (!t.isRoot(p)) {
+            Position<Entry<K, V>> parent = t.parent(p);
+            if (compareEntries(p.element(), parent.element()) >= 0) {
+                break;
+            }
+            swap(p, parent);
+            p = parent;
+        }
+        lastPos = p;
+    }
+
+    private void swap(Position<Entry<K, V>> p1, Position<Entry<K, V>> p2) {
+        Entry<K, V> temp = p1.element();
+        t.set(p1, p2.element());
+        t.set(p2, temp);
+    }
+
+    public Entry<K, V> dequeue() throws EmptyPriorityQueueException {
+        if (t.isEmpty()) {
+            throw new EmptyPriorityQueueException();
+        }
+
+        Entry<K, V> minEntry = t.root().element();
+        if (tam == 1) {
+            t.remove(t.root());
+            lastPos = null;
+        } else {
+            Position<Entry<K, V>> lastNode = findLastNode();
+            swap(t.root(), lastNode);
+            t.remove(lastNode);
+            bubbleDown(t.root());
+        }
+        tam--;
+        return minEntry;
+    }
+
+    private Position<Entry<K, V>> findLastNode() {
+        int size = tam;
+        Position<Entry<K, V>> lastNode = t.root();
+        String binaryPath = Integer.toBinaryString(size);
+        for (int i = 1; i < binaryPath.length(); i++) {
+            lastNode = (binaryPath.charAt(i) == '0') ? t.left(lastNode) : t.right(lastNode);
+        }
+        return lastNode;
+    }
+
+    private void bubbleDown(Position<Entry<K, V>> p) {
+        while (t.isInternal(p)) {
+            Position<Entry<K, V>> smallerChild = smallestChild(p);
+            if (smallerChild == null || compareEntries(smallerChild.element(), p.element()) >= 0) {
+                break;
+            }
+            swap(p, smallerChild);
+            p = smallerChild;
+        }
+    }
+
+    private Position<Entry<K, V>> smallestChild(Position<Entry<K, V>> p) {
+        Position<Entry<K, V>> smallerChild = null;
+        if (t.hasLeft(p)) {
+            smallerChild = t.left(p);
+            if (t.hasRight(p) && compareEntries(t.right(p).element(), smallerChild.element()) < 0) {
+                smallerChild = t.right(p);
+            }
+        }
+        return smallerChild;
+    }
+
+    private int compareEntries(Entry<K, V> entry1, Entry<K, V> entry2) {
+        return entry1.getKey().compareTo(entry2.getKey());
+    }
+
+    @Override
+    public Iterator<Entry<K, V>> iterator() {
+        List<Entry<K, V>> entries = new ArrayList<>();
+        inOrderTraversal(t.root(), entries);
+        return entries.iterator();
+    }
+
+    private void inOrderTraversal(Position<Entry<K, V>> p, List<Entry<K, V>> entries) {
+        if (t.hasLeft(p)) {
+            inOrderTraversal(t.left(p), entries);
+        }
+        entries.add(p.element());
+        if (t.hasRight(p)) {
+            inOrderTraversal(t.right(p), entries);
+        }
+    }
+}
