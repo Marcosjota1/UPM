@@ -1,0 +1,7 @@
+var int a               	;
+var  string   b         	;
+var boolean c;
+function void vacia(int num){
+    if(c)num = a;
+}
+if (varGlobal) output b;

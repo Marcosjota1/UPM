@@ -1,0 +1,40 @@
+package vida;
+
+import java.awt.Color;
+
+import stdlib.StdDraw;
+
+public class Celula {
+	private int x;
+    private int y;
+	private boolean viva;
+	private boolean muerta;
+	public static double DIM = 0.6;
+	private java.awt.Color color;
+	
+	public Celula(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.viva = false;
+        this.color = StdDraw.BLACK;
+    }
+	
+	public void hacerViva() {
+        this.viva = true;
+        this.color = StdDraw.WHITE;
+    }
+	public void hacerMuerta() {
+        this.muerta = true;
+        this.color = StdDraw.BLACK;
+    }
+	public boolean estaViva() {
+        return this.viva;
+    }
+	public void dibujar() {
+        StdDraw.setPenColor(this.color);
+        StdDraw.filledSquare(this.x + 0.5, this.y + 0.5, DIM);
+    }
+
+	
+
+}

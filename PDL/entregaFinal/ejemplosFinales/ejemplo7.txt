@@ -1,0 +1,7 @@
+var int a               	;
+var  string   b         	;
+a = 3                  		;
+b = 'prueba';			
+if (a < a) a /= 01     	;
+if () a = 01      	;
+var boolean bbbb		;

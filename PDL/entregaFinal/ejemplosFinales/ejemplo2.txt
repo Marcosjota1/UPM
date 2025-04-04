@@ -1,0 +1,12 @@
+var boolean booleano;
+function void funcion1 (string s, string msg, int print)	
+{
+	output (s); output msg; output(print);
+	return;
+}
+function string funcion2 (boolean log)
+{
+return 'log';
+}
+a=1;a=b;
+funcion1 (funcion2 (booleano), ' prueba llamada funciones ', 1);

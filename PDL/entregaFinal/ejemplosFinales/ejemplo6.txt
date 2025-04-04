@@ -1,0 +1,7 @@
+function void multiplica(int num)
+{
+	output 'Se va a realizar la operacion:';
+    num * numGlobal;
+}
+output 35;
+

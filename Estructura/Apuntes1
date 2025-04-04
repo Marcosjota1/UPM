@@ -1,0 +1,58 @@
+Ensamblador:
+
+88110e  -e P_ent -o ej.bin ej.ens (se compila, ensambla archivo)
+-e 0 indica la posición de memoria que empieza el programa
+-0 fichero de salida, siempre.bin y fichero fuente que estas ejecutando 
+UN EJEMPLO SERÍA: 88110e -e 0 -o ejemplo1.bin ejemplo1.ens
+
+ej.bin: (creo que compila )
+	- contiene la traduccion a lenguaje máquina(del 88110) de las instrucciones
+	- Definicion de los datos incluido en el programa
+	- Contiene la tabla de símbolos(conjunto de etiquetas del programa junto con sus direcciones)
+	- Contiene punto de entrada: Direccion de comienzo de la ejecución
+mc88110.bat: (ejecuta el programa)
+	-Se ejecuta de esta manera: mc88110.bat ejemplo1.bin (tambien sin poner.bat parece ser)
+		Al ejecutar reconoce la operación add por ejemplo, y muestra en Tot. Inst las iteraciones hechas
+		¡¡ Ciclo : 1 indica que se va a realizar el primer ciclo
+		Tambien mjuestra el contenido de las memoria desde 01 hasta 31
+		Y te enseña los flancos, nos importa FC(flanco de acarreo) y FV (flanco de overflow
+		(88110> h (te enseña los comandos) algunos ejemplos:
+		
+			r 2 0x10203040 modifica registro de r2, pasara de ser 0 a 10203040,
+				siempre para cambiar poner 0xnº al que quieres caambiar
+			r 3 10203040 te lo modifica en hexadecimal
+			
+			v 0 ver contenido de la memoria 
+				te saldra: 0   F4427003    FFFFFFFF  00000000  00000000
+						   16  00000000    00000000  00000000  00000000
+						   32  00000000    00000000  00000000  00000000
+						   48  00000000    00000000  00000000  00000000
+						   64  00000000    00000000  00000000  00000000
+			i 1000 0x1020340 : te modifica el valor del registro 1000		
+			
+			d 1000: desemsamblar direccion 1000, te enseña las instrucciones qie hay en memoria 1000
+			
+			e : ejecuta donde apunta el puntero(ejecuta todo el programa)
+			Una vez el puntero va avanzando, no puedes ir atras a ejecutar el programa, debes salir(q)
+			y volver a ejecutar el programa (mc88110.bat ejemplo1.bin)
+			Con t a diferencia de e ejecutas solo una parte del programa, es decir al hacer t no va a hacer todos los
+			contadores hasta que termine el programa, va a hacer la instruccion, suma el contador y para
+			
+			p Comando para punto de ruptura, si llega a ese punto(esa instruccion) para el programa y nos devuelve
+			el control. Util para ejecutar solo 1 subrutina
+			Se añade de la manera p + SUMA (corre el programa hasta que llega a subrutina SUMA donde para
+			/ p - SUMA (para quitarlo)
+			
+Ctrl + c --> detienes ejecución del programa
+Para ejecutar en ensamblador, debes decirle por que linea empezar ejemplo:
+	SUMA:       add    r2, r2, r3    ; r2 <-- r2 + r3
+            jmp    (r1)
+
+	; Llamante
+	;
+	LLAM:       add    r2, r0, 10  ; r2 <-- 10 (dato en decimal)
+            add    r3, r0, -7  ; r3 <-- -7
+            bsr    SUMA        ; Llamada a subrutina ( ¿ no hay pila ?) hara bs -4(4 instrucciones hasta suma) 
+            stop               ; 'instrucción' del emulador 
+	PARA ESTE PROGRAMA ejecutar: 
+		G:\ProyectoEstructura\88k_EjemplosPR>88110e -e 8/LLAM -o ejemplo2.bin ejemplo2.ens

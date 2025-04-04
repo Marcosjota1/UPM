@@ -1,0 +1,17 @@
+<wordFunction, >
+<wordInt, >
+<id, 0>
+<parAbrir, >
+<wordInt, >
+<id, 1>
+<parCerrar, >
+<llaveAbrir, >
+<wordReturn, >
+<parAbrir, >
+<id, 2>
+<opArSuma, >
+<id, 1>
+<parCerrar, >
+<puntocoma, >
+<llaveCerrar, >
+<EOF, >

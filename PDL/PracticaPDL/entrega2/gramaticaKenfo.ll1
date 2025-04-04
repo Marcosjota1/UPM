@@ -1,0 +1,75 @@
+Terminales = { boolean else case function if input int return string var void output constEntera cadena id || /= = , ; : ( ) { } /  < EOF }
+
+NoTerminales = { P B F H A C K E E1 T S L Q X R R1 U U1 V S1 B1 V1 }
+
+Axioma = P
+
+Producciones = {
+
+    E -> R E1
+    E1 -> || R E1
+    E1 -> lambda
+
+    R -> U R1
+    R1 -> < U R1
+    R1 -> lambda
+
+
+    U -> V U1
+    U1 -> / V U1
+    U1 -> lambda
+
+    V -> id  V1      
+    V -> ( E )
+    V -> constEntera  
+    V -> cadena
+    V1 -> ( L )
+    V1 -> lambda 
+
+    B -> if ( E ) S
+
+    T -> boolean 
+    T -> int 
+    T -> string
+
+    B -> S
+    B -> var T id ;
+    B1 -> { S } else { S }
+
+    Q -> , E Q 
+    Q -> lambda
+    S -> id S1    
+    S -> output E ;
+    S -> input id ;
+    S -> return X ;
+
+    X -> E 
+    X -> lambda
+
+    S1 -> = E ;   
+    S1 -> /= E ;
+    S1 -> ( L )
+
+    L -> E Q 
+    L -> lambda
+
+    F -> function H id ( A ) { C }
+    H -> T 
+    H -> void
+
+    A -> T id K 
+    A -> void
+
+    K -> , T id K 
+    K -> lambda
+
+    C -> B C 
+    C -> lambda
+
+
+    P -> F P                                        
+    P -> B P                                       
+    P -> EOF 
+
+
+}

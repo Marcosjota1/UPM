@@ -1,0 +1,68 @@
+/* Comentario de linea es con //. */
+
+/* El de bloque va entre /* y */
+
+var int entero;
+var string cadena;
+var boolean logico;
+function void pp_(void)
+{
+ var int  pp__  ;
+  abcdefghij________  = 0;
+}function void FuncionNumero (void)
+{
+  var  int i;
+  var  int j;
+  
+  logico = i  <  j;
+}
+function string FuncionRetorno (string hola, int x, boolean z)
+{
+  var  int i
+  
+  ;input i
+  ;output hola
+  ;x=i
+  ;z = x<entero
+  ;if (z)return hola
+  ;return cadena;
+}
+function void FuncionSentencia(int b_b, boolean z)
+{
+	var  int a ;
+  switch (b_b)
+  {
+	case 1  : if (z) output 88;
+	case 11 : input entero; a=entero;
+	case 111: 
+			  input cadena;
+	case 1111: output (b); break;
+  }
+}
+function void Funcion  (int pp__x__, boolean b)
+{
+	if (pp__x__  <  0)FuncionSentencia(pp__x__,b);
+  output 
+    cadena;return;
+}
+var int iii  ;
+var boolean bbb  ;
+
+/* 
+esto 
+es 
+un 
+comentario! 
+multi 
+//linea */
+
+input iii;
+output  (  iii  )  ;  
+
+iii = iii;
+bbb = bbb;
+
+Funcion
+ ( iii, 
+   bbb )
+;

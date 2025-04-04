@@ -1,0 +1,3 @@
+[submodule "profesor/030_tads/tads"]
+	path = profesor/030_tads/tads
+	url = https://bitbucket.org/etsiinf-programacion2/tads.git

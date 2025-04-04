@@ -1,0 +1,35 @@
+
+33
+10 10 CelulaIntermitente
+10 11 CelulaIntermitente
+10 12 CelulaIntermitente
+11 10 CelulaIntermitente
+11 11 CelulaIntermitente
+11 12 CelulaIntermitente
+15 10 CelulaIntermitente
+15 11 CelulaIntermitente
+15 12 CelulaIntermitente
+15 13 CelulaIntermitente
+16 10 CelulaIntermitente
+16 11 CelulaIntermitente
+16 13 CelulaIntermitente
+16 14 CelulaIntermitente
+30 31 Viva
+30 32 Viva
+31 31 Viva
+31 32 Viva
+32 33 Viva
+33 33 Viva
+33 34 Viva
+33 35 Viva
+34 34 Viva
+35 35 Viva
+40 40 SiempreIgual true
+41 40 SiempreIgual true
+42 40 SiempreIgual true
+41 41 SiempreIgual true
+40 42 SiempreIgual true
+50 50 SiempreIgual false
+51 50 SiempreIgual false
+52 50 SiempreIgual false
+53 50 SiempreIgual false

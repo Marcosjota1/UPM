@@ -1,0 +1,8 @@
+var int a               ;
+var  string   b         ;
+a = 3                   ;
+b = 4					    ;
+if (a < b) b /= 01      ;
+if (b < a) b = 01      ;
+boolean bbbb;
+return b                ;

@@ -1,0 +1,12 @@
+var string s;
+var boolean b;
+function void pruebaSwitch(int num)
+{
+  switch (numGlobal)
+  {
+	case 1:	if ( b ) output s;
+	case 2: 
+	case 3:  pruebaSwitch (33); numGlobal=2;
+  }
+  return numGlobal;
+}

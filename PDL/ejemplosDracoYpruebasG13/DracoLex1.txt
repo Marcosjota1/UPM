@@ -1,0 +1,64 @@
+
+var string	cadena;
+input 
+cadena;
+var boolean logico1	;
+var boolean logico2 	;
+var int int2			;
+
+
+
+/* Ejemplo #1*/
+
+int1 = 000000378;
+
+int2 = int1;
+cadena = 'string';
+
+function  string ff(string ss)
+{
+	logico2 =  logico1;
+	if (logico2) cadena = ff (ss);
+	varglobal = 78;
+	return cadena;
+}
+		
+function string funciOn  (string logico2)
+{	var  boolean let;
+
+  switch (int1){
+	case 0:	logico1 = int1 < int2;break;
+	case 8888: output(0);
+	case 3333: logico2='';
+  }
+  
+  return logico2;
+}
+cadena = (ff(funciOn(cadena)));
+output cadena;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Errror sintactico, falta el punto coma
+Lexico esta bien*/

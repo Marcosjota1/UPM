@@ -1,0 +1,12 @@
+var int x ;
+var boolean b;
+var int z;
+input x;output x;input z;
+output x/z;
+b=x<z;if (b) z =
+  x + 7
+    / z
+    / (1
+    / 2
+    / y)
+    / 3;

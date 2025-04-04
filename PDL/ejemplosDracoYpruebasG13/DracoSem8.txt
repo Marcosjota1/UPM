@@ -1,0 +1,71 @@
+var int		x        ;
+var int		xx       ;
+var string	ss       ;
+var boolean	boolean_1;
+var boolean	boolean_2;
+var int		y        ;
+
+var int aa_aa;
+var int iiii ;
+var string s64;
+var boolean bOO;
+var boolean bOOO;
+
+function int fiii (void) {return 33;}
+function string fsss (void) {return s64;}
+function boolean fbbb (void) {return bOO;}
+function void fvvv (void) {output s64;}
+
+var int aaaaa;
+var int iiiii;
+
+
+iiiii=iaiaia;
+
+
+iiii = aaaaa;
+
+
+s64= bOO || bOOO	;
+
+
+
+iiii=aaaaa/9;
+
+
+
+bOO=fbbb()
+;
+
+
+bOO=fbbb()|| bOO;
+
+
+
+function int f1 (int f1, boolean b2)
+{
+		output ss;
+		x /= xx/f1;
+		b2 = boolean_2 || boolean_1;
+		return (f1);
+}
+
+
+function boolean f2  ( int f2 , boolean b2 )
+{
+		input y;
+		output ((444/55+7/(088+f2)));
+		return (boolean_2||boolean_1||b2);
+}
+
+x =
+  x + 6	
+    / z 
+    / 1
+    / (2
+    / y 
+    / 6)
+	;
+	
+	
+boolean_1=(f2 (f1 (x, boolean_1), boolean_2));

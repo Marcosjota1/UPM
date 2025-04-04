@@ -1,0 +1,117 @@
+package main;
+
+import Polinomios.Polinomio;
+
+import java.util.Arrays;
+
+import Polinomios.Monomio;
+
+public class Principal {
+	public static void main(String[] args) {
+		Monomio ma = new Monomio(3.0, 3);
+		Monomio mb = new Monomio(4.5, 1);
+		Monomio mc = new Monomio(-3.1, 2);
+		Monomio md = new Monomio(1.0, 2);
+		Monomio me = new Monomio(-1.0, 2);
+		Monomio mf = new Monomio(0.0, 0);
+		Monomio mg = new Monomio(1.0, 7);
+		Monomio mh = new Monomio(1.0, 8);
+
+		System.out.println(" Los monomios con los que vamos a operar son:");
+		System.out.println(ma);
+		System.out.println(mb);
+		System.out.println(mc);
+		System.out.println(md);
+		System.out.println(me);
+		System.out.println(mf);
+
+		System.out.println("\nSuma de monomios:");
+		Monomio suma = Monomio.sumar(ma, mb); // null ya que tiene exponente distinto
+		Monomio suma1 = Monomio.sumar(md, mc); // se puede operar
+		Monomio suma2 = Monomio.sumar(md, me); // null ya que anula coeficiente
+		System.out.println(suma);
+		System.out.println(suma1);
+		System.out.println(suma2);
+
+		System.out.println("\nMultiplicación de monomios:");
+		Monomio multiplicacion = Monomio.multiplicar(ma, mc); // se puede operar
+		Monomio multiplicacion1 = Monomio.multiplicar(ma, mf); // null al multiplicar por 0
+		System.out.println(multiplicacion);
+		System.out.println(multiplicacion1);
+
+		Polinomio p1 = new Polinomio();
+		p1.guardarMonomio(ma);
+		p1.guardarMonomio(mb);
+		p1.guardarMonomio(mc);
+
+		System.out.println("\nPolinomio p1:");
+		System.out.println(Arrays.toString(p1.getMonomios()));
+
+		Monomio m1 = new Monomio(-2.5, 3);
+		Monomio m2 = new Monomio(1.5, 4);
+		p1.sumar2(m1);
+		p1.sumar2(m2);
+
+		System.out.println("Polinomio p1 después de sumar los monomios:");
+		System.out.println(Arrays.toString(p1.getMonomios()));
+
+		Polinomio p2 = new Polinomio();
+		p2.guardarMonomio(new Monomio(1.5, 2));
+		p2.guardarMonomio(new Monomio(5.0, 0));
+		p2.guardarMonomio(new Monomio(3.2, 3));
+
+		System.out.println("\nPolinomio p2:");
+		System.out.println(Arrays.toString(p2.getMonomios()));
+
+		p2.sumar2(new Monomio(0.0, 0));
+		p2.sumar2(new Monomio(1.0, 0));
+
+		System.out.println("Polinomio p2 después de sumar los monomios:");
+		System.out.println(Arrays.toString(p2.getMonomios()));
+
+		Polinomio p3 = new Polinomio();
+		p3.guardarMonomio(ma);
+		p3.guardarMonomio(mb);
+		p3.guardarMonomio(mc);
+		p3.guardarMonomio(mg);
+		p3.guardarMonomio(mh);
+
+		System.out.println("\nPolinomio p3:");
+		System.out.println(Arrays.toString(p3.getMonomios()));
+
+		Monomio m3 = new Monomio(5.5, 5);
+		p3.sumar2(m3); // dara error al estar el array lleno y devolvera un mensaje con el array sin
+						// modificar
+
+		System.out.println("Polinomio p3 después de sumar el monomio:");
+		System.out.println(Arrays.toString(p3.getMonomios()));
+
+		Polinomio p4 = new Polinomio();
+		p4.guardarMonomio(new Monomio(2, 3));
+		p4.guardarMonomio(new Monomio(5, 2));
+		p4.guardarMonomio(new Monomio(1, 1));
+		p4.guardarMonomio(new Monomio(3, 0));
+
+		System.out.println("\nPolinomio original: " + p4);
+
+		Monomio m5 = new Monomio(4.0, 2);
+		p4.multiplicar(m5);
+
+		System.out.println("Polinomio después de multiplicar por este monomio " + m5 + " es : " + p4);
+
+		Polinomio p5 = new Polinomio();
+		p5.guardarMonomio(new Monomio(2, 3));
+		p5.guardarMonomio(new Monomio(5, 2));
+		p5.guardarMonomio(new Monomio(1, 1));
+		p5.guardarMonomio(new Monomio(3, 0));
+
+		System.out.println("\nPolinomio original: " + p5);
+
+		Monomio m6 = new Monomio(0.0, 2); // dara como resultado un array vacio, al multiplicar por 0
+		p5.multiplicar(m6);
+
+		System.out.println("Polinomio después de multiplicar por este monomio " + m6 + " es : " + p5);
+
+	}
+
+}

@@ -1,0 +1,4 @@
+Daniela 23
+Pedro 4
+Jimena 15
+Diego 10

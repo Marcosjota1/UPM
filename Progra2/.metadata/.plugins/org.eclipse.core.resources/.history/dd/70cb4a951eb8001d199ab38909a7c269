@@ -1,0 +1,39 @@
+package pelotas;
+
+import java.util.Random;
+
+public class Campo {
+	private final static double DELTA_TIEMPO = 0.01;
+	public final static double DIM = 100.0;
+
+	private PelotaAzul[] pelotasRojas;
+	public static final Random r = new Random();
+	int contador = 0;
+
+	public Campo() {
+		pelotasRojas = new PelotaAzul[3];
+		pelotasRojas[0] = new PelotaAzul(10, 100);
+		pelotasRojas[1] = new PelotaAzul(50, 50);
+		pelotasRojas[2] = new PelotaAzul(40, 10);
+		contador = 0;
+
+	}
+
+	public void tick() {
+		for (int i = 0; i < pelotasRojas.length; i++) {
+			pelotasRojas[i].mover(DELTA_TIEMPO);
+
+		}
+		if (contador % 500 == 1) {
+			PelotaAzul.vx = 1 + r.nextInt(10);
+			PelotaAzul.vy = 1 + r.nextInt(10);
+		}
+
+	}
+
+	public void dibujar() {
+		for (int i = 0; i < pelotasRojas.length; i++) {
+			pelotasRojas[i].dibujar();
+		}
+	}
+}

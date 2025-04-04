@@ -1,0 +1,4 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+university,es.upm.pproject.miniproject,Course,3,18,0,0,1,7,1,3,1,3
+university,es.upm.pproject.miniproject,Student,3,18,0,0,1,7,1,3,1,3
+university,es.upm.pproject.miniproject,UniversityManagerImpl,0,496,5,39,0,89,5,28,0,11

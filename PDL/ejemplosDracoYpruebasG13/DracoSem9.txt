@@ -1,0 +1,58 @@
+var string s ;	/** variable global cadena **/
+var int    uno;
+var int    UNO;
+var 
+boolean 
+booleano
+;function int Factorial  (int n)	
+{
+	switch (n)
+	{
+		case 0: return 1; break;
+		case 1: if (n < 0) return uno;
+	}
+	return n + Factorial (n /2);	
+}
+s = 'El factorial !';	
+
+output (s);
+output 'Introduce un entero:';
+input num;
+var 
+boolean
+bool
+ 
+;
+
+
+function void get(int fff){input pp_f;}
+ var int  For;
+var int  functional;
+var int  While;	
+
+function void print (string s, string msg, int f_f_)	
+{
+	output (s); output msg; output(f_f_);
+	return;	
+}
+function string cadena  (boolean log)
+{
+switch (UNO)
+  {
+	case 99:	if (uno < UNO)	return s;
+	case 88: return ('cadena');
+	case 33: uno=100; break;
+	case 0:  print (s, 'hola', 33); uno=2;
+
+  }
+}
+UNO=1;uno=UNO;
+if (num < 0)		output 'No existe un factorial de negativos.';
+For=  Factorial (num);
+
+
+
+
+/***/
+
+

@@ -1,0 +1,25 @@
+CONTENIDO DE LA TABLA DE SIMBOLOS #1:
+* LEXEMA : 's'
+ Atributos :
+ + Tipo : 'cadena'
+ + Despl : 0
+--------- ----------
+* LEXEMA: 'pruebaRecursiva'
+Atributos:
+ + Tipo: 'function'
+ + NumParam: 1
+ + TipoParam01: 'entero'
+ + TipoRetorno: 'entero'
+ + EtiqFuncion: 'Et_pruebaRecursiva_01'
+--------- ----------
+* LEXEMA : 'varGlobal'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 64
+--------- ----------
+CONTENIDO DE LA TABLA DE SIMBOLOS #2:
+* LEXEMA : 'n'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 0
+--------- ----------

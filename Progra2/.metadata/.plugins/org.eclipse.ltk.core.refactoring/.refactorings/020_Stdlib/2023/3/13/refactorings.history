@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move package &apos;stdlib&apos; to &apos;Practica2/src/vida&apos;&#x0D;&#x0A;- Original project: &apos;020_Stdlib&apos;&#x0D;&#x0A;- Destination element: &apos;Practica2/src/vida&apos;&#x0D;&#x0A;- Original element: &apos;020_Stdlib/src/stdlib&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move package" destination="=Practica2/src&lt;vida" element1="/src&lt;stdlib" flags="589830" fragments="1" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.movePackages" stamp="1680189276164" version="1.0"/>
+</session>

@@ -1,0 +1,56 @@
+CONTENIDO DE LA TABLA DE SIMBOLOS #1:
+* LEXEMA : 'booleano'
+ Atributos :
+ + Tipo : 'logico'
+ + Despl : 0
+--------- ----------
+* LEXEMA: 'funcion1'
+Atributos:
+ + Tipo: 'function'
+ + NumParam: 3
+ + TipoParam01: 'cadena'
+ + TipoParam02: 'cadena'
+ + TipoParam03: 'entero'
+ + TipoRetorno: 'vacio'
+ + EtiqFuncion: 'Et_funcion1_01'
+--------- ----------
+* LEXEMA: 'funcion2'
+Atributos:
+ + Tipo: 'function'
+ + NumParam: 1
+ + TipoParam01: 'logico'
+ + TipoRetorno: 'cadena'
+ + EtiqFuncion: 'Et_funcion2_02'
+--------- ----------
+* LEXEMA : 'a'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 1
+--------- ----------
+* LEXEMA : 'b'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 2
+--------- ----------
+CONTENIDO DE LA TABLA DE SIMBOLOS #2:
+* LEXEMA : 's'
+ Atributos :
+ + Tipo : 'cadena'
+ + Despl : 0
+--------- ----------
+* LEXEMA : 'msg'
+ Atributos :
+ + Tipo : 'cadena'
+ + Despl : 64
+--------- ----------
+* LEXEMA : 'print'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 128
+--------- ----------
+CONTENIDO DE LA TABLA DE SIMBOLOS #3:
+* LEXEMA : 'log'
+ Atributos :
+ + Tipo : 'logico'
+ + Despl : 0
+--------- ----------

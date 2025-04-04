@@ -1,0 +1,100 @@
+CONTENIDO DE LA TABLA DE SIMBOLOS #1:
+* LEXEMA : 's'
+ Atributos :
+ + Tipo : 'cadena'
+ + Despl : 0
+--------- ----------
+* LEXEMA : 'a'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 64
+--------- ----------
+* LEXEMA : 'bb'
+ Atributos :
+ + Tipo : 'logico'
+ + Despl : 65
+--------- ----------
+* LEXEMA: 'RR'
+Atributos:
+ + Tipo: 'function'
+ + NumParam: 2
+ + TipoParam01: 'entero'
+ + TipoParam02: 'logico'
+ + TipoRetorno: 'entero'
+ + EtiqFuncion: 'Et_RR_01'
+--------- ----------
+* LEXEMA : 'kk'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 66
+--------- ----------
+* LEXEMA : 's1'
+ Atributos :
+ + Tipo : 'cadena'
+ + Despl : 67
+--------- ----------
+* LEXEMA: 'put'
+Atributos:
+ + Tipo: 'function'
+ + NumParam: 3
+ + TipoParam01: 'cadena'
+ + TipoParam02: 'entero'
+ + TipoParam03: 'entero'
+ + TipoRetorno: 'vacio'
+ + EtiqFuncion: 'Et_put_02'
+--------- ----------
+* LEXEMA : 's11'
+ Atributos :
+ + Tipo : 'logico'
+ + Despl : 131
+--------- ----------
+* LEXEMA: 'cadena'
+Atributos:
+ + Tipo: 'function'
+ + NumParam: 0
+ + TipoRetorno: 'cadena'
+ + EtiqFuncion: 'Et_cadena_03'
+--------- ----------
+CONTENIDO DE LA TABLA DE SIMBOLOS #2:
+* LEXEMA : 'n'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 0
+--------- ----------
+* LEXEMA : 'b'
+ Atributos :
+ + Tipo : 'logico'
+ + Despl : 1
+--------- ----------
+* LEXEMA : 'log'
+ Atributos :
+ + Tipo : 'logico'
+ + Despl : 2
+--------- ----------
+CONTENIDO DE LA TABLA DE SIMBOLOS #3:
+* LEXEMA : 's'
+ Atributos :
+ + Tipo : 'cadena'
+ + Despl : 0
+--------- ----------
+* LEXEMA : 'RR'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 64
+--------- ----------
+* LEXEMA : 'pp'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 65
+--------- ----------
+CONTENIDO DE LA TABLA DE SIMBOLOS #4:
+* LEXEMA : 'kk'
+ Atributos :
+ + Tipo : 'logico'
+ + Despl : 0
+--------- ----------
+* LEXEMA : 'xx'
+ Atributos :
+ + Tipo : 'cadena'
+ + Despl : 1
+--------- ----------

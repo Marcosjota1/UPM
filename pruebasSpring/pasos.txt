@@ -1,0 +1,8 @@
+1. Esqueleto -> spring initialzr
+2. Haces tu código en src y dentro de demo (o como se llame el proyecto spring)
+3. maven clean
+4. maven install
+5. Spring -> run
+6. Abrir postman -> My workspace -> new -> HTTP
+6. Request HTTP desde postman con http://localhost:8080 + uri asignada 
+(Tambien actualizarían BBDD cuando la configure y en vez localhost usuario BBDD y actualizar rsources) 

@@ -1,0 +1,8 @@
+var boolean b;
+function int funcion1(int p1, boolean p2) {
+    return funcion1(varGlobal1, b);
+}
+function boolean funcion2(boolean b){
+    return b;
+}
+funcion1 (x, funcion2(b),'parametro erroneo');

@@ -1,0 +1,4 @@
+var int n1;
+var int n2;
+var int n3
+var int n4;

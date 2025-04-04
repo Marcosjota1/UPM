@@ -1,0 +1,79 @@
+Terminales = { boolean switch case break function if input int return string var void output entero cadena id + /= = , ; : ( ) { } / || < eof }  
+NoTerminales = { P B F H A C T K E S BB L Q X R U V W S1 W1 EE RR UU VV  }
+Axioma = P
+
+
+Producciones = {
+	P -> F P                                //// 1       
+	P -> B P                                //// 2  
+	P -> eof                                //// 3
+
+	F -> function H id ( A ) { C }          //// 4
+	H -> T                                  //// 5
+	H -> void                               //// 6
+
+	A -> T id K                             //// 7
+	A -> void                               //// 8
+
+	K -> , T id K                           //// 9
+	K -> lambda                             //// 10
+
+	C -> B C                                //// 11
+	C -> lambda                             //// 12
+
+	B -> if ( E ) S                         //// 13
+	B -> var T id ;                         //// 14
+	B -> S                                  //// 15
+	B -> switch ( E ) { BB }                //// 16
+
+	T -> boolean                            //// 17
+	T -> int                                //// 18
+	T -> string                             //// 19
+
+	BB -> case entero : C BB                //// 20
+	BB -> lambda                            //// 21
+
+	S -> id S1 ;                            //// 22
+	S1 -> = E                               //// 23
+	S1 -> /= E                              //// 24
+	S1 -> ( L )                             //// 25
+
+	L -> E Q                                //// 26
+	L -> lambda                             //// 27
+
+	Q -> , E Q                              //// 28
+	Q -> lambda                             //// 29
+
+	S -> break ;                            //// 30
+	S -> output E ;                         //// 31
+	S -> input id ;                         //// 32
+	S -> return X ;                         //// 33
+
+	X -> E                                  //// 34
+	X -> lambda                             //// 35
+
+	E -> R EE                               //// 36
+	EE -> || R EE                           //// 37
+	EE -> lambda                            //// 38
+
+	R -> U RR                               //// 39
+	RR -> < U RR                            //// 40
+	RR -> lambda                            //// 41
+
+	U -> V UU                               //// 42
+	UU -> + V UU                            //// 43
+	UU -> lambda                            //// 44
+
+	V -> W VV                               //// 45
+	VV -> / W VV                            //// 46
+	VV -> lambda                            //// 47
+
+	W -> id W1                              //// 48
+	W -> ( E )                              //// 49
+	W -> entero                             //// 50
+	W -> cadena 				//// 51
+
+	W1 -> ( L )                             //// 52
+	W1 -> lambda                            //// 53
+
+}

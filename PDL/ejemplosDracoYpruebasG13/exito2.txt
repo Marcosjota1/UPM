@@ -1,0 +1,17 @@
+var int n1;var int n2;
+var boolean b1;var boolean b2;
+if (b1 < b2) return(n1<n2);
+input n1;
+if (b1 || b2) cad = 'hello';
+n2 /= n1 + 378;
+output 33 / n1 / n2;
+switch(n1){
+    case 1 : return;
+    case 2 :    
+            break;
+            return;
+            break;
+            break;
+    case 3: 
+        if (b1 < b2) return(n1<n2);
+}

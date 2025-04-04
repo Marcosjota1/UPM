@@ -1,0 +1,152 @@
+Axioma = P'
+
+Producciones = {
+
+E -> R E1 {if (E1.tipo=vacio) then E.tipo=R.tipo
+		else E.tipo := E1.tipo }	{if(AUX[tope]=null) then AUX[tope-2]=AUX[tope-1] else AUX[tope-2]=AUX[tope] pop(2)}	////1
+
+E1 -> && R E2 {if(E2.tipo!=tipo_error && R.tipo=logico) then E1.tipo := logico
+			else E1.tipo := tipo_error}	////2
+
+E1 -> lambda {E1.tipo=vacio}	////3
+
+R -> U R1 {if(R1.tipo =vacio) then R.tipo=U.tipo
+		else R.tipo= R1.tipo}	////4
+
+R1 -> > U R2 {if (U.tipo=entero && R2.tipo !=tipo_error) then R1.tipo=logico
+			else R1.tipo := tipo_error}	////5
+
+R1 -> lambda {R1.tipo=vacio}	////6
+
+U -> V U1 {if (U1.tipo=vacio) then U.tipo=V.tipo
+		else U.tipo=U1.tipo}	////7
+
+
+U1 -> + V U1 { if(V.tipo==entero && U1.tipo!=tipo_error) then U1.tipo= entero
+			else U1.tipo= tipo_error }   			////8
+U1 -> lambda {U1.tipo = vacio}					 ////9	
+
+V -> W V1	{if (V1.tipo==vacio) then V.tipo= W.tipo
+			else V.tipo= V1.tipo }				////10
+
+V1 -> %= W V1 {if (W.tipo==entero && V1.tipo!=tipo_error) then V1.tipo=entero
+			else V1.tipo= tipo_error }	////11
+
+V1 -> lambda {V1.tipo=vacio}				////12
+
+W -> id W1	{if(buscaTipoTS(id.pos)!=null && W1.tipo != tipo_error ) then W.tipo=buscaTipoTS(id.pos)
+		else W.tipo= tipo_error }	////13
+
+W -> cteEntera {W.tipo=entero}	////14	
+W -> cadena	{W.tipo=cadena}		////15
+W -> ( E ) {W.tipo=E.tipo}		////16
+
+W1 -> ( L )	{W1.tipo=L.tipo}		////17
+W1 -> lambda {W1.tipo=vacio}		////18
+
+I -> id = E	{if( buscaTipoTS(id.pos)!=null && buscaTipoTS(id.pos)==E.tipo) then I.tipo=tipo_ok
+			else I.tipo=tipo_error }	////19
+I -> lambda	{I.tipo=vacio}	////20
+	
+I1 -> id I2	{if( buscaTipoTS(id.pos)!=null && buscaTipoTS(id.pos)==I2.tipo)
+			 then I1.tipo=tipo_ok
+			else I1.tipo=tipo_error }	////21
+
+I1 -> lambda {I1.tipo=vacio}			////22
+
+I2 -> = E {I2.tipo=E.tipo }	////23
+
+I2 -> %= E	{if(E.tipo=entero) then I2.tipo=E.tipo
+		else I2.tipo := tipo_error }	////24
+
+S -> id S1  {if(buscaTipoTS(id.pos)!=null && buscaTipoTS(id.pos)='funcion' && buscarParametrosTS(id.pos)==S1.tipo)
+            || if(buscaTipoTS(id.pos)!=null && buscaTipoTS(id.pos)==S1.tipo)
+		then S.tipo=tipo_ok 
+		else S.tipo=tipo_error}		////25
+
+S -> output E ; {if (E.tipo !=logico && E.tipo!=tipo_error)
+			then S.tipo := tipo_ok
+			else S.tipo := tipo_error}	////26
+
+S -> input id ; {if(buscaTipoTS(id.pos)!=null && id.tipo!=logico )
+								then S.tipo := tipo_ok
+								else S.tipo:= tipo_error }	////27
+
+S -> return X ; { tipoReturn= X.tipo)
+			S.tipo := X.tipo
+			}	////28	
+
+S1 -> = E ; {if (E.tipo !=tipo_error && E.tipo!=vacio)
+		then S1.tipo=E.tipo
+		else S1.tipo=tipo_error} 		////29
+
+S1 -> %= E ; {S1.tipo=E.tipo}	////30
+
+S1 -> ( L ) ;{S1.tipo=L.tipo}	////31
+
+L -> E Q	{if(E.tipo!=tipo_error && E.tipo!=vacio && Q.tipo!=tipo_error && Q.tipo!=vacio) 
+		then L.tipo=E.tipo x Q.tipo
+		else L.tipo=E.tipo; CompararPar(L.tipo}       ////32
+
+L -> lambda	{L.tipo=vacio}	////33
+
+Q -> , E Q1 {if(E.tipo!=tipo_error &&E.tipo!=vacio && Q1.tipo!=tipo_error
+		then Q.tipo=tipo_ok
+		else Q.tipo=tipo_error }		////34
+
+Q -> lambda {Q.tipo=vacio}		////35
+
+X -> E {X.tipo=E.tipo}	////36
+X -> lambda	{X.tipo=vacio}	////37
+
+B -> if ( E ) S {if(E.tipo==logico && S.tipo!=vacio && S.tipo!=tipo_error) then B.tipo=S.tipo
+		else B.tipo=tipo_error }	////38
+
+B -> S {if(S.tipo!=tipo_error &&S.tipo!=vacio then B.tipo=S.tipo
+		else B.tipo=tipo_error}		////39
+
+B -> for ( I ; E ; I1 ) {if(E.tipo==boolean && I.tipo=tipo_ok && I1.tipo=.tipo_ok) then B.tipo := tipo_ok
+					else B.tipo := tipo_error }	////40
+
+B -> {ZonaDeclaracion=true} var T id {ZonaDeclaracion=false} ; {insertaTipoTS(id.pos,T.tipo,DespL);DespL=DespL+T.tam }		////41
+
+
+T -> cteEntera {T.tipo:=entero; T.tam=1}			////42
+T -> bool {T.tipo:=logico; T.tam=1}				////43
+T -> string	{T.tipo:=cadena; T.tam=64}			////44
+T -> int {T.tipo:=entero; T.tam=1}				////45
+
+F -> function {46.1} H id {46.2} ( A {46.3} )  { C {46.4} } {46.5}	////46
+
+F -> function {zonaDeclaracion=true} H id {insertaEtiqTS(id.pos,nuevaEtiq());TSL=crearTS();Desp_L=0;TSA=TSL} ( A  {zonaDeclaracion=false } ) { C {borraTS(TSL);TSA=TSG} } {insertaFunctionTS(id.pos,A.tipo -> H.tipo);if ( return != H.tipo && C.tipo!=vacio)
+																						then F.tipo= tipo_error else F.tipo=tipo_ok; F.tipoDevuelto=H.tipo}	////46
+
+
+H -> T {H.tipo= T.tipo}					////47
+H -> void {H.tipo=void}				////48
+
+A -> T id K	{A.tipo=T.tipo; insertaTS(id.pos,T.tipo,DespL);DespL=DespL + T.tam}		////49
+A -> void {A.tipo=vacio}				////50
+
+K -> , T id K1 {K.tipo=T.tipo;insertaTS(id.pos,T.tipo,DespL);DespL=DespL + T.tam}		////51
+K -> lambda	{K.tipo=vacio}				////52
+
+C -> B C1 {if(C1.tipo=vacio then C.tipo=B.tipo
+		else C.tipo= C1.tipo }					////53
+
+C -> lambda	{C.tipo=vacio}				////54		
+
+P -> B P1 {if (P1.tipo = vacio && B.tipo = tipo_ok)
+			then P.tipo = tipo_ok
+		else if (P1.tipo = tipo_ok && B.tipo = tipo_ok)
+			then P.tipo = tipo_ok 
+		else P.tipo = tipo_ERR}        ////55
+
+P -> F P1 {if (P1.tipo = vacio && F.tipo = tipo_ok) then P.tipo = tipo_ok
+		else if (P1.tipo = tipo_ok && F.tipo = tipo_ok) then P.tipo = tipo_ok }
+		else P.tipo = tipo_ERR}					////56	
+
+P -> eof {P.tipo=vacio}					////57
+
+P' -> {TSG:=Crear_TS();DespG:=0; TSA=TSG;des_A:=des_G} P {P'.tipo:=P.tipo;DestruyeTS(TSG)} ////58
+}

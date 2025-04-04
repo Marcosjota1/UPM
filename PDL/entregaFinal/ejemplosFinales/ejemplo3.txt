@@ -1,0 +1,6 @@
+function  boolean funcion1(int d, int m, boolean b)	{
+    if(b) output (a);
+	return m<1 || m<12 || d<1 || d < d || d < 1 || b;
+}
+function void funcion2  (void){}
+funcion2();

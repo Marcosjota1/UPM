@@ -1,0 +1,36 @@
+package vida;
+
+import java.awt.Color;
+import stdlib.StdDraw;
+
+
+public class ClaseInterminente extends Celula implements Tick {
+	private int contador;
+	private boolean viva;
+	
+	public ClaseInterminente(int x, int y) {
+		super(x,y);
+		this.viva=false;
+		this.contador= 0;
+		
+	}
+	
+	public void tick() {
+		this.contador++;
+		if(this.contador == 20) {
+			this.viva= !this.viva;
+			this.contador=0;
+		}
+	}
+	public void actualizar() {
+        if (this.viva) {
+            hacerViva();
+            StdDraw.setPenColor(StdDraw.WHITE);
+        } else {
+            hacerMuerta();
+            StdDraw.setPenColor(StdDraw.BLUE);
+        }
+		StdDraw.filledSquare(x + 0.5, y + 0.5, DIM);
+    }
+
+}

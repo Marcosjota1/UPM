@@ -1,0 +1,121 @@
+var int n1 ;
+var boolean b1 ;
+var string s1;
+var int n2 ;
+var int n3 ;
+var boolean b2;
+var boolean b3;
+var string s2 ;
+var string s3;
+
+function void f6(int n4)
+{
+	var boolean bbb ;
+	output n8;
+	output kkk;
+}
+function void f1(void)
+{
+	var int n 	;
+	output (n1 + 5);
+	var boolean n3 ;
+}
+
+
+function void f2 (int n4, string s4)
+{
+	var int n1;
+	var string b1;
+	var int n5;
+	n5=n4;
+	b1=s1;
+	if (n2 < n5) f1 ();
+}
+
+
+function int f3  (int n1)
+{
+	var	 string s1 
+;
+	var	int n2  
+;
+	var int i ;
+	s3=s1;
+	if (n1 < n2) n4= f3 (n1 / 2);
+	return n3;
+}
+
+
+
+function boolean f4  (string n1, boolean s1, int b1)
+{
+	var int nbs;
+	var	string  f1;
+	n=88;
+	return s1 || b2;
+}
+function string f5  (int f1, int f2, string f4, string f6, int f5 )
+{
+	var	boolean  ff;
+	if (f5 < f8) return f4;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b2
+   = 
+      (n1 < f3 (n1));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b3 
+	=
+	
+		b2|| f4 ('end', b3, f3(nnnn));

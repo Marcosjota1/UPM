@@ -1,0 +1,27 @@
+var boolean  booleano;
+
+output 4+5+77;
+ 
+function int dias (int m, int a)
+{
+	var int dd;
+	output('di cuantos dias tiene el mes ');
+	output m;
+	output ' de '; output a;
+	input dd;
+	if (bisiesto(a)) dd = dd + 1;
+	return dd;
+}
+
+function void demo  (void)	
+{
+
+	if (esFechaCorrecta(25, 10, 2024)) output ('ok');
+	
+}
+var int aaa111 ;
+demo();
+
+
+
+    /*EXITO EN DRACO*/

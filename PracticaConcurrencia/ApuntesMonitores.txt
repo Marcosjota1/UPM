@@ -1,0 +1,27 @@
+2 estados (Se puede parecer a un semaforo(1))
+    Cuando se inicializa esta en libre
+    Tras hacer un enter pasa a estar ocupado
+    Con leave vuelve a estar libre, salvo que haya enter bloqueado,que dara paso al enter mas antiguo
+NO hay anidamiento, tiene que liberarse del monitor antes de acceder a otro(no ocupa dos a la vez)
+mutex.newCond() waitsets, condition queues (politica FIFO)  -- Usadas para garantizar la sincronizacion 
+                                                        que no garantiza un monitor
+    Las variable condition solo dentro de un monitor
+    await: suspende el proceso y lo incluye en la cola
+    signal: reactiva proceso 
+    waiting: nº que estan esperando
+
+SEMAFOROS CON MONITORES
+    public void inc(){                      
+        mutex.enter();
+        if(condicion){
+            bloqueados.await();
+        }
+    valor--;
+    mutex.leave();
+    }
+public void dec(){
+    mutex.enter();
+    valor++;
+    bloqueados.signal();
+    mutex.leave();
+    }

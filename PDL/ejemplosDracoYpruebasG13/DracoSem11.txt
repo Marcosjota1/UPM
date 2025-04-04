@@ -1,0 +1,86 @@
+/* Comentario de linea es con //. */
+
+/* El de bloque va entre /* y */
+
+var int entero;
+var string cadena;
+var boolean logico;
+function void pp_(void)
+{
+ var int  pp__  ;
+  a0b1c2d3e4f5g6h7i8j9k  = 0;
+}function void FuncionNumero 	(void)
+{
+  var  int i ;
+
+  
+  i=entero;
+  entero = 9  /  i;
+}
+function string FuncionRetorno (string otracadena, int x, boolean z)
+{
+  x = 33  +  (x  +  entero); return otracadena;
+}
+var string s64 ;
+var boolean booo ;
+var int aaaaa ;
+var int iiiii ;
+function int fiii  (void) {return 33;}
+function string fsss  (void) {return s64;}
+function boolean fbbb  (void) {return booo;}
+function void fvvv  (void) {output s64;}
+
+function int FuncionSentencia(int b_b, boolean z)
+{
+	var int a ;
+  switch (b_b)
+  {
+	case 1  : if (z) output 88;
+	case 11 : input entero; a=entero;
+	case 111: 
+			  input cadena;
+	case 1111: output (b); break;
+  }
+}
+
+
+switch (iiii)
+{
+	case 0: break;
+	case 3333 : if (fbbb()) break; 
+	case 12345: input aaaaa; break;
+	case 1: output fiii();
+	case 22222: input lllll; break;
+}
+
+if (booo) break; 
+
+entero=FuncionSentencia (FuncionSentencia (iiiii, fbbb()), booo);
+
+function void Funcion  (int pp__x__, boolean b)
+{
+	if (pp__x__  <  0)FuncionSentencia(pp__x__,b);
+  output 
+    cadena;return;
+}
+var int iii  ;
+var boolean bbb  ;
+
+/* 
+esto 
+es 
+un 
+comentario! 
+multi 
+//linea */
+
+input iii;
+output  (  iii  )  ;  
+
+iii = iii;
+bbb = bbb;
+
+Funcion
+ ( iii, 
+   bbb )
+;

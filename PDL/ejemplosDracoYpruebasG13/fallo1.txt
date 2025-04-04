@@ -1,0 +1,13 @@
+var int n1;
+var int n2;
+input n1;
+n2 /= n1 + 378;
+output 33 / n1 / n2;
+switch(n1){
+    case 1 : return;
+            break;
+    case 2 : return;
+            break;
+    case 3: 
+        if (1 < 2) {return(n1<n2);}
+}

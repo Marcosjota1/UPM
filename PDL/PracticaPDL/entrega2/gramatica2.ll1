@@ -1,0 +1,87 @@
+ Terminales = { boolean switch case break default function if input int return string var void output entero cadena id + /= = , ; : ( ) { } / || < eof }  
+//// A lo mejor añadir lambda a los terminales, aunque da error
+NoTerminales = { P B F H A C T K E S BB L Q X R U V W S1 W1 EE RR UU VV D  }
+//// S1 creado al tener S sino distibtos conjuntos con mismo first
+Axioma = P
+
+
+Producciones = {
+    P -> F P                                        
+    P -> B P                                       
+    P -> eof  
+
+
+    F -> function H id ( A ) { C }
+    H -> T 
+    H -> void
+
+    A -> T id K 
+    A -> void
+
+    K -> , T id K 
+    K -> lambda
+
+    C -> B C 
+    C -> lambda
+
+
+    B -> if ( E ) S
+    B -> var T id ;
+
+    T -> boolean 
+    T -> int 
+    T -> string
+
+    B -> S
+    B -> switch ( E ) { BB }                                
+    BB -> case entero : C D BB 
+    BB -> default : C D BB
+    BB -> lambda
+	D -> break ;
+	D -> lambda
+
+    S -> id S1    
+    S1 -> = E ;   
+    S1 -> /= E ;
+    S1 -> ( L )
+
+
+    L -> E Q 
+    L -> lambda
+
+    Q -> , E Q 
+    Q -> lambda
+
+    S -> output E ;
+    S -> input id ;
+    S -> return X ;
+
+    X -> E 
+    X -> lambda
+
+    E -> R EE
+    EE -> || R EE
+    EE -> lambda
+
+    R -> U RR
+    RR -> < U RR
+    RR -> lambda
+
+
+    U -> V UU
+    UU -> + V UU
+    UU -> lambda
+
+
+    V -> W VV
+    VV -> / W VV
+    VV -> lambda
+
+    W -> id  W1      
+    W -> ( E )
+    W -> entero        ////no estoy seguro que poner como operandos, a lo mejor tambien llaves puntos coma etc
+    W -> string
+    W1 -> ( L )
+    W1 -> lambda
+
+}

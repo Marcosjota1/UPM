@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UniversityManagerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">university</a> &gt; <a href="index.source.html" class="el_package">es.upm.pproject.miniproject</a> &gt; <span class="el_source">UniversityManagerImpl.java</span></div><h1>UniversityManagerImpl.java</h1><pre class="source lang-java linenums">package es.upm.pproject.miniproject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+<span class="fc" id="L10">public class UniversityManagerImpl implements UniversityManager {</span>
+<span class="fc" id="L11">    private static final Logger logger = LoggerFactory.getLogger(UniversityManagerImpl.class);</span>
+
+    // Mapa para almacenar cursos (clave: código del curso, valor: objeto Course)
+<span class="fc" id="L14">    private final Map&lt;Integer, Course&gt; courses = new HashMap&lt;&gt;();</span>
+    // Mapa para almacenar estudiantes (clave: ID del estudiante, valor: objeto Student)
+<span class="fc" id="L16">    private final Map&lt;Integer, Student&gt; students = new HashMap&lt;&gt;();</span>
+    // Mapa para almacenar matrículas (clave: código del curso, valor: lista de IDs de estudiantes)
+<span class="fc" id="L18">    private final Map&lt;Integer, List&lt;Integer&gt;&gt; enrollments = new HashMap&lt;&gt;();</span>
+
+    // Máximo número de estudiantes por curso
+    private static final int MAX_STUDENTS_PER_COURSE = 50;
+
+    // Patrón para validar email
+<span class="fc" id="L24">    private static final Pattern EMAIL_PATTERN = Pattern.compile(&quot;^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$&quot;);</span>
+
+    // Constantes para evitar duplicación de literales
+    private static final String COURSE_PREFIX = &quot;El curso con código &quot;;
+    private static final String STUDENT_PREFIX = &quot;El estudiante con ID &quot;;
+    private static final String NOT_REGISTERED_SUFFIX = &quot; no está registrado.&quot;;
+
+    @Override
+    public void registerCourse(int code, String name, String coordinator) throws IllegalArgumentException {
+        // Validaciones
+<span class="pc bpc" id="L34" title="1 of 4 branches missed.">        if (name == null || name.trim().isEmpty()) {</span>
+<span class="fc" id="L35">            logger.error(&quot;Intento de registrar curso con nombre vacío: code={}&quot;, code);</span>
+<span class="fc" id="L36">            throw new IllegalArgumentException(&quot;El nombre del curso no puede estar vacío.&quot;);</span>
+        }
+<span class="pc bpc" id="L38" title="1 of 4 branches missed.">        if (coordinator == null || coordinator.trim().isEmpty()) {</span>
+<span class="fc" id="L39">            logger.error(&quot;Intento de registrar curso con coordinador vacío: code={}&quot;, code);</span>
+<span class="fc" id="L40">            throw new IllegalArgumentException(&quot;El coordinador del curso no puede estar vacío.&quot;);</span>
+        }
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (courses.containsKey(code)) {</span>
+<span class="fc" id="L43">            logger.error(&quot;Intento de registrar curso ya existente: code={}&quot;, code);</span>
+<span class="fc" id="L44">            throw new IllegalArgumentException(COURSE_PREFIX + code + &quot; ya está registrado.&quot;);</span>
+        }
+
+        // Registro del curso
+<span class="fc" id="L48">        Course course = new Course(code, name.trim(), coordinator.trim());</span>
+<span class="fc" id="L49">        courses.put(code, course);</span>
+<span class="fc" id="L50">        logger.info(&quot;Curso registrado exitosamente: code={}, name={}, coordinator={}&quot;, code, name, coordinator);</span>
+<span class="fc" id="L51">    }</span>
+
+    @Override
+    public void registerStudent(int id, String name, String email) throws IllegalArgumentException {
+        // Validaciones
+<span class="pc bpc" id="L56" title="1 of 4 branches missed.">        if (name == null || name.trim().isEmpty()) {</span>
+<span class="fc" id="L57">            logger.error(&quot;Intento de registrar estudiante con nombre vacío: id={}&quot;, id);</span>
+<span class="fc" id="L58">            throw new IllegalArgumentException(&quot;El nombre del estudiante no puede estar vacío.&quot;);</span>
+        }
+<span class="fc bfc" id="L60" title="All 4 branches covered.">        if (email == null || email.trim().isEmpty()) {</span>
+<span class="fc" id="L61">            logger.error(&quot;Intento de registrar estudiante con email vacío: id={}&quot;, id);</span>
+<span class="fc" id="L62">            throw new IllegalArgumentException(&quot;El email del estudiante no puede estar vacío.&quot;);</span>
+        }
+<span class="pc bpc" id="L64" title="1 of 4 branches missed.">        if (!EMAIL_PATTERN.matcher(email).matches() || email.endsWith(&quot;.&quot;)) {</span>
+<span class="fc" id="L65">            logger.error(&quot;Intento de registrar estudiante con email inválido: id={}, email={}&quot;, id, email);</span>
+<span class="fc" id="L66">            throw new IllegalArgumentException(&quot;El email del estudiante no tiene un formato válido.&quot;);</span>
+        }
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (students.containsKey(id)) {</span>
+<span class="fc" id="L69">            logger.error(&quot;Intento de registrar estudiante ya existente: id={}&quot;, id);</span>
+<span class="fc" id="L70">            throw new IllegalArgumentException(STUDENT_PREFIX + id + &quot; ya está registrado.&quot;);</span>
+        }
+
+        // Registro del estudiante
+<span class="fc" id="L74">        Student student = new Student(id, name.trim(), email.trim());</span>
+<span class="fc" id="L75">        students.put(id, student);</span>
+<span class="fc" id="L76">        logger.info(&quot;Estudiante registrado exitosamente: id={}, name={}, email={}&quot;, id, name, email);</span>
+<span class="fc" id="L77">    }</span>
+
+    @Override
+    public void enrollStudent(int studentId, int courseCode) throws IllegalStateException {
+        // Validaciones
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (!students.containsKey(studentId)) {</span>
+<span class="fc" id="L83">            logger.error(&quot;Intento de matricular estudiante no registrado: studentId={}&quot;, studentId);</span>
+<span class="fc" id="L84">            throw new IllegalStateException(STUDENT_PREFIX + studentId + NOT_REGISTERED_SUFFIX);</span>
+        }
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (!courses.containsKey(courseCode)) {</span>
+<span class="fc" id="L87">            logger.error(&quot;Intento de matricular en curso no registrado: courseCode={}&quot;, courseCode);</span>
+<span class="fc" id="L88">            throw new IllegalStateException(COURSE_PREFIX + courseCode + NOT_REGISTERED_SUFFIX);</span>
+        }
+
+<span class="fc" id="L91">        List&lt;Integer&gt; enrolledStudents = enrollments.computeIfAbsent(courseCode, k -&gt; new ArrayList&lt;&gt;());</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (enrolledStudents.contains(studentId)) {</span>
+<span class="fc" id="L93">            logger.error(&quot;Estudiante ya matriculado en el curso: studentId={}, courseCode={}&quot;, studentId, courseCode);</span>
+<span class="fc" id="L94">            throw new IllegalStateException(&quot;El estudiante ya está matriculado en este curso.&quot;);</span>
+        }
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (enrolledStudents.size() &gt;= MAX_STUDENTS_PER_COURSE) {</span>
+<span class="fc" id="L97">            logger.error(&quot;Límite de estudiantes alcanzado para el curso: courseCode={}&quot;, courseCode);</span>
+<span class="fc" id="L98">            throw new IllegalStateException(&quot;El curso ha alcanzado el límite de &quot; + MAX_STUDENTS_PER_COURSE + &quot; estudiantes.&quot;);</span>
+        }
+
+        // Matriculación
+<span class="fc" id="L102">        enrolledStudents.add(studentId);</span>
+<span class="fc" id="L103">        logger.info(&quot;Estudiante matriculado en curso: studentId={}, courseCode={}&quot;, studentId, courseCode);</span>
+<span class="fc" id="L104">    }</span>
+
+    @Override
+    public List&lt;Student&gt; getStudentsInCourse(int courseCode) {
+        // Validación
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (!courses.containsKey(courseCode)) {</span>
+<span class="fc" id="L110">            logger.error(&quot;Intento de listar estudiantes de curso no registrado: courseCode={}&quot;, courseCode);</span>
+<span class="fc" id="L111">            throw new IllegalStateException(COURSE_PREFIX + courseCode + NOT_REGISTERED_SUFFIX);</span>
+        }
+
+        // Obtener lista de estudiantes matriculados de forma optimizada
+<span class="fc" id="L115">        List&lt;Integer&gt; enrolledStudentIds = enrollments.getOrDefault(courseCode, Collections.emptyList());</span>
+<span class="fc" id="L116">        List&lt;Student&gt; result = enrolledStudentIds.stream()</span>
+<span class="fc" id="L117">                .map(students::get)</span>
+<span class="fc" id="L118">                .filter(Objects::nonNull)</span>
+<span class="fc" id="L119">                .sorted(Comparator.comparingInt(Student::getId))</span>
+<span class="fc" id="L120">                .collect(Collectors.toList());</span>
+
+<span class="fc" id="L122">        logger.info(&quot;Lista de estudiantes obtenida para el curso: courseCode={}, count={}&quot;, courseCode, result.size());</span>
+<span class="fc" id="L123">        return result;</span>
+    }
+
+    @Override
+    public void cancelEnrollment(int studentId, int courseCode) throws IllegalStateException {
+        // Validaciones
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (!students.containsKey(studentId)) {</span>
+<span class="fc" id="L130">            logger.error(&quot;Intento de cancelar matrícula de estudiante no registrado: studentId={}&quot;, studentId);</span>
+<span class="fc" id="L131">            throw new IllegalStateException(STUDENT_PREFIX + studentId + NOT_REGISTERED_SUFFIX);</span>
+        }
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (!courses.containsKey(courseCode)) {</span>
+<span class="fc" id="L134">            logger.error(&quot;Intento de cancelar matrícula en curso no registrado: courseCode={}&quot;, courseCode);</span>
+<span class="fc" id="L135">            throw new IllegalStateException(COURSE_PREFIX + courseCode + NOT_REGISTERED_SUFFIX);</span>
+        }
+
+<span class="fc" id="L138">        List&lt;Integer&gt; enrolledStudents = enrollments.get(courseCode);</span>
+<span class="pc bpc" id="L139" title="1 of 4 branches missed.">        if (enrolledStudents == null || !enrolledStudents.contains(studentId)) {</span>
+<span class="fc" id="L140">            logger.error(&quot;Estudiante no está matriculado en el curso: studentId={}, courseCode={}&quot;, studentId, courseCode);</span>
+<span class="fc" id="L141">            throw new IllegalStateException(&quot;El estudiante no está matriculado en este curso.&quot;);</span>
+        }
+
+        // Cancelar matrícula
+<span class="fc" id="L145">        enrolledStudents.remove(Integer.valueOf(studentId));</span>
+<span class="fc" id="L146">        logger.info(&quot;Matrícula cancelada: studentId={}, courseCode={}&quot;, studentId, courseCode);</span>
+<span class="fc" id="L147">    }</span>
+
+    @Override
+    public void restartCourse(int courseCode) {
+        // Validación
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (!courses.containsKey(courseCode)) {</span>
+<span class="fc" id="L153">            logger.error(&quot;Intento de reiniciar curso no registrado: courseCode={}&quot;, courseCode);</span>
+<span class="fc" id="L154">            throw new IllegalStateException(COURSE_PREFIX + courseCode + NOT_REGISTERED_SUFFIX);</span>
+        }
+
+        // Reiniciar curso (eliminar todas las matrículas)
+<span class="fc" id="L158">        enrollments.remove(courseCode);</span>
+<span class="fc" id="L159">        logger.info(&quot;Curso reiniciado: courseCode={}&quot;, courseCode);</span>
+<span class="fc" id="L160">    }</span>
+
+    @Override
+    public List&lt;Student&gt; getAllStudents() {
+<span class="fc" id="L164">        List&lt;Student&gt; result = new ArrayList&lt;&gt;(students.values());</span>
+        // Ordenar por ID
+<span class="fc" id="L166">        result.sort(Comparator.comparingInt(Student::getId));</span>
+<span class="fc" id="L167">        logger.info(&quot;Lista de todos los estudiantes obtenida: count={}&quot;, result.size());</span>
+<span class="fc" id="L168">        return result;</span>
+    }
+
+    @Override
+    public List&lt;Course&gt; getAllCourses() {
+<span class="fc" id="L173">        List&lt;Course&gt; result = new ArrayList&lt;&gt;(courses.values());</span>
+        // Ordenar por código
+<span class="fc" id="L175">        result.sort(Comparator.comparingInt(Course::getCode));</span>
+<span class="fc" id="L176">        logger.info(&quot;Lista de todos los cursos obtenida: count={}&quot;, result.size());</span>
+<span class="fc" id="L177">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

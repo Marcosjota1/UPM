@@ -1,0 +1,27 @@
+CONTENIDO DE LA TABLA DE SIMBOLOS #1:
+* LEXEMA: 'funcion1'
+Atributos:
+ + Tipo: 'function'
+ + NumParam: 3
+ + TipoParam01: 'entero'
+ + TipoParam02: 'cadena'
+ + TipoParam03: 'logico'
+ + TipoRetorno: 'vacio'
+ + EtiqFuncion: 'Et_funcion1_01'
+--------- ----------
+CONTENIDO DE LA TABLA DE SIMBOLOS #2:
+* LEXEMA : 'arg1'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 0
+--------- ----------
+* LEXEMA : 'arg2'
+ Atributos :
+ + Tipo : 'cadena'
+ + Despl : 1
+--------- ----------
+* LEXEMA : 'arg3'
+ Atributos :
+ + Tipo : 'logico'
+ + Despl : 65
+--------- ----------

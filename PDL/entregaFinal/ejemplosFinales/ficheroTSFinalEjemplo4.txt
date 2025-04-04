@@ -1,0 +1,20 @@
+CONTENIDO DE LA TABLA DE SIMBOLOS #1:
+* LEXEMA: 'funcion1'
+Atributos:
+ + Tipo: 'function'
+ + NumParam: 1
+ + TipoParam01: 'entero'
+ + TipoRetorno: 'entero'
+ + EtiqFuncion: 'Et_funcion1_01'
+--------- ----------
+* LEXEMA : 'global'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 0
+--------- ----------
+CONTENIDO DE LA TABLA DE SIMBOLOS #2:
+* LEXEMA : 'arg1'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 0
+--------- ----------

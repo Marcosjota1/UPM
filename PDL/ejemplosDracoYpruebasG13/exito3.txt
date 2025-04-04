@@ -1,0 +1,18 @@
+output 4/5+77;
+
+function  boolean funcion  (int a)	
+{	var string holaMundo;
+	output 'Esto es una prueba';
+	input holaMundo;
+	return ((a + a + a < 0) || a);	
+	c;
+	d;
+}
+
+function  boolean vacia (void)	
+{
+	return;
+}
+
+var int c;
+vacia();

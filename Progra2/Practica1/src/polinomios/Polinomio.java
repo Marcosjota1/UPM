@@ -1,0 +1,129 @@
+package polinomios;
+
+public class Polinomio {
+	public final Monomio[] monomios;
+	public int cantidadMonomios = 0;
+	public static final int DELTA_LONGITUD = 5;
+	public Polinomio() {
+		monomios = new Monomio[DELTA_LONGITUD];
+	}
+
+	public void ordenarMonomios() {
+		for (int i = 0; i < cantidadMonomios - 1; i++) {
+			for (int j = i + 1; j < cantidadMonomios; j++) {
+				if (monomios[i].getExponente() > monomios[j].getExponente()) {
+					Monomio x = monomios[i];
+					monomios[i] = monomios[j];
+					monomios[j] = x;
+				} // comparará cada par de monomios para ver sual de los exponentes en el par es
+					// mayor, y si no estan en orden creciente los cambia de orden
+			}
+		}
+	}
+
+	public void eliminarIguales() { // sirve por si se guardan 2 monomios con mismo exponente en un array los sume
+		for (int i = 0; i < cantidadMonomios; i++) {
+			for (int j = i + 1; j < cantidadMonomios; j++) {
+				if (monomios[i].getExponente() == monomios[j].getExponente()) {
+					double nuevoCoeficiente = monomios[i].getCoeficiente() + monomios[j].getCoeficiente();
+					monomios[i] = new Monomio(nuevoCoeficiente, monomios[i].getExponente());
+					for (int k = j; k < cantidadMonomios - 1; k++) {
+						monomios[k] = monomios[k + 1];
+					}
+					monomios[cantidadMonomios - 1] = null;
+					cantidadMonomios--;
+					j--;
+				}
+			}
+		}
+		ordenarMonomios();
+	}
+
+	public void guardarMonomio(Monomio monomio) {
+		if (cantidadMonomios >= DELTA_LONGITUD) {
+			System.out.println("El array esta lleno");
+			return;
+		}
+		monomios[cantidadMonomios] = monomio;
+		cantidadMonomios++;
+		eliminarIguales();
+		ordenarMonomios();
+
+	}
+
+	public void sumar(Monomio monomio) {
+		boolean encontrado = false;
+		for (int i = 0; i < cantidadMonomios; i++) {
+			if (monomios[i].getExponente() == monomio.getExponente()) {
+				encontrado = true;
+				double nuevoCoeficiente = monomios[i].getCoeficiente() + monomio.getCoeficiente();
+				monomios[i] = new Monomio(nuevoCoeficiente, monomios[i].getExponente());
+				if (nuevoCoeficiente == 0) {
+					// Eliminar el monomio si el coeficiente da 0 tras la suma
+					for (int j = i; j < cantidadMonomios - 1; j++) {
+						monomios[j] = monomios[j + 1];
+					}
+					cantidadMonomios--;
+
+				}
+				break;
+			}
+
+		}
+		if (!encontrado) {
+			if (cantidadMonomios >= DELTA_LONGITUD) {
+				System.out.println("El array esta lleno, no se puede sumar el monomio, por lo que no se puede operar");
+				return;
+			} else {
+				monomios[cantidadMonomios] = monomio;
+				cantidadMonomios++;
+				ordenarMonomios();
+			}
+		}
+		eliminarIguales();
+	}
+
+	public void multiplicar(Monomio monomio) {
+		if (cantidadMonomios == 0) {
+			return;
+		}
+
+		for (int i = 0; i < cantidadMonomios; i++) {
+			Monomio monomioActual = monomios[i];
+			Monomio monomioResultado = Monomio.multiplicar(monomioActual, monomio);
+
+			if (monomioResultado == null) {
+				for (int j = i; j < cantidadMonomios - 1; j++) {
+					monomios[j] = monomios[j + 1];
+				}
+
+				monomios[cantidadMonomios - 1] = null;
+				cantidadMonomios--;
+				i--;
+			} else {
+				monomios[i] = monomioResultado;
+
+			}
+		}
+		ordenarMonomios();
+		eliminarIguales();
+	}
+
+	public String toString() {
+		String polinomioVer = "";
+		for (int i = 0; i < cantidadMonomios; i++) {
+			if(monomios[i]!= null) {
+				polinomioVer += monomios[i];
+				if (i < cantidadMonomios - 1) {
+					polinomioVer += " + ";
+				}
+			}
+		}
+		return polinomioVer;
+	}
+
+	public Monomio[] getMonomios() {
+		return monomios;
+	}
+
+}

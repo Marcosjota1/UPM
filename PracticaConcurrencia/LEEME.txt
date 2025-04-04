@@ -1,0 +1,27 @@
+
+- Para poder compilar y ejecutar tu código necesitarás adaptarlo a tu
+  IDE favorito.
+
+- Si lo haces desde la línea de comandos bastará con compilar:
+  javac -d . -cp .:cclib.jar:jcsp.jar *.java
+
+- Y ejecutar:
+  java -cp .:cclib.jar:jcsp.jar cc.blockchain.Simulador
+
+- Notad que el fichero BlockchainCSP_skel_java no tiene sufijo .java.
+Hay que renombrarlo a BlockchainCSP.java despues haber hecho los cambios necesarios para
+que el fichero compila (cuando empezais con la practica de JCSP).
+
+- No olvides cambiar en Simulador.java la creación del recurso
+  compartido en la línea 24 de acuerdo a la práctica que quieras
+  simular
+
+  -      blockchain = new BlockchainMonitor();
+  +      blockchain = new BlockchainCSP();
+
+- Y por supuesto no olvides recompilar todo antes de volver a ejecutar:
+  javac -d . -cp .:cclib.jar:jcsp.jar *.java
+
+- Se irán publicando actualizaciones al código de apoyo con mejoras en
+  el simulador, correcciones de posibles errores y plantillas de
+  código.

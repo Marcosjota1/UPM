@@ -1,0 +1,62 @@
+var int    uno;
+var int    UNO;
+var 
+boolean 
+booleano
+;var string s;	
+var boolean bo ;
+var int aaaaa;
+function int Factorial  (int n)	
+{
+	f3();
+	switch (n)
+	{
+		case 0: return 2; break;
+		case 2: if(bo)return 0; break;
+		case 4: if (bo) return uno;
+	}
+	return n + Factorial (n );	
+}
+
+output Factorial (s);
+
+if (bo) aaaaaa=8;
+
+if () aaaaa=3;
+
+switch (aaaaa)
+{
+	case 873: break;
+	case 3333 : if (bo) break; output Factorial (s); 
+	case 12345: input aa_aa; break;
+	case 2: output lllll;
+	case 22222: input aaaaa; break;
+}
+
+var int  For;
+var int  functional;
+var int  While;	
+
+function void print (string s, string msg, int print)	
+{
+	output (s); output msg; output(print);
+	return;	
+}
+function string cadena (boolean log)
+{
+switch (UNO)
+  {
+	case 0:	if (uno < UNO)
+	return s;
+	case 8888: return ('cadena');
+	case 3333: uno=100; break;
+	case 7777: print (s, 'hola', 321); uno=2;
+
+  }
+}
+if (num < 0)		output 'Sin factorial.';
+For=  Factorial (num);
+uno=1;
+UNO=uno;
+
+

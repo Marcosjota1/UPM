@@ -1,0 +1,5 @@
+function void funcion1(int arg1, string arg2, boolean arg3){
+    if (arg1<0 || arg3)
+        output arg2;
+    return;
+}

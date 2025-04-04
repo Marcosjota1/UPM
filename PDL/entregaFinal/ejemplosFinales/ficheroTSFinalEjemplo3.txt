@@ -1,0 +1,40 @@
+CONTENIDO DE LA TABLA DE SIMBOLOS #1:
+* LEXEMA: 'funcion1'
+Atributos:
+ + Tipo: 'function'
+ + NumParam: 3
+ + TipoParam01: 'entero'
+ + TipoParam02: 'entero'
+ + TipoParam03: 'logico'
+ + TipoRetorno: 'logico'
+ + EtiqFuncion: 'Et_funcion1_01'
+--------- ----------
+* LEXEMA : 'a'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 0
+--------- ----------
+* LEXEMA: 'funcion2'
+Atributos:
+ + Tipo: 'function'
+ + NumParam: 0
+ + TipoRetorno: 'vacio'
+ + EtiqFuncion: 'Et_funcion2_02'
+--------- ----------
+CONTENIDO DE LA TABLA DE SIMBOLOS #2:
+* LEXEMA : 'd'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 0
+--------- ----------
+* LEXEMA : 'm'
+ Atributos :
+ + Tipo : 'entero'
+ + Despl : 1
+--------- ----------
+* LEXEMA : 'b'
+ Atributos :
+ + Tipo : 'logico'
+ + Despl : 2
+--------- ----------
+CONTENIDO DE LA TABLA DE SIMBOLOS #3:
